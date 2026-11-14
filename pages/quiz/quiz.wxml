@@ -1,0 +1,28 @@
+<view class="panel intro">
+  <view class="intro-title">找国家测验</view>
+  <view class="intro-desc">题目给出一个国家的名字，你在地图上拖动、缩放，找到它并点一下。第一次就点对才得分。</view>
+
+  <view class="label">出题范围</view>
+  <view class="scopes">
+    <view wx:for="{{scopes}}" wx:key="name" data-name="{{item.name}}" bindtap="onScope"
+          class="scope {{item.name === scope ? 'scope-on' : ''}}">
+      <view class="scope-name">{{item.name}}</view>
+      <view class="scope-count">{{item.count}} 个国家</view>
+    </view>
+  </view>
+
+  <view class="summary">本次共 {{count}} 题<text wx:if="{{best}}"> · 该范围最好成绩 {{best}}</text></view>
+  <view class="btn-row"><view class="btn" hover-class="btn-hover" bindtap="start">开始测验</view></view>
+</view>
+
+<view class="panel">
+  <view class="panel-head"><text class="panel-title">最近成绩</text></view>
+  <view class="row" wx:for="{{records}}" wx:key="time">
+    <view class="row-main">
+      <view class="row-name">{{item.scope}}</view>
+      <view class="row-sub">{{item.date}}</view>
+    </view>
+    <text class="score">{{item.score}} / {{item.total}}</text>
+  </view>
+  <view wx:if="{{!records.length}}" class="empty">还没有测验记录</view>
+</view>

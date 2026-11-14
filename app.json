@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/library/library",
+    "pages/quiz/quiz",
+    "pages/me/me",
+    "pages/play/play"
+  ],
+  "window": {
+    "navigationBarTitleText": "世界地理地图",
+    "navigationBarBackgroundColor": "#0d47a1",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f7fa"
+  },
+  "tabBar": {
+    "color": "#7b8794",
+    "selectedColor": "#0d47a1",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "地图", "iconPath": "images/tab-map.png", "selectedIconPath": "images/tab-map-on.png" },
+      { "pagePath": "pages/library/library", "text": "知识库", "iconPath": "images/tab-book.png", "selectedIconPath": "images/tab-book-on.png" },
+      { "pagePath": "pages/quiz/quiz", "text": "测验", "iconPath": "images/tab-quiz.png", "selectedIconPath": "images/tab-quiz-on.png" },
+      { "pagePath": "pages/me/me", "text": "我的", "iconPath": "images/tab-user.png", "selectedIconPath": "images/tab-user-on.png" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

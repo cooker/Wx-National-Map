@@ -1,0 +1,42 @@
+.page { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+.map { width: 100%; height: 100%; }
+
+.qcard { position: absolute; left: 24rpx; right: 24rpx; top: 24rpx; padding: 24rpx 32rpx; background: #ffffff; border-radius: 28rpx; }
+.q-top { display: flex; align-items: center; gap: 20rpx; }
+.q-meta { font-size: 26rpx; color: #52606d; }
+.q-bar { background: #5e35b1; }
+.q-score { padding: 2rpx 20rpx; font-size: 26rpx; font-weight: 700; color: #5e35b1; background: #ede7f6; border-radius: 20rpx; }
+.q-text { margin-top: 12rpx; font-size: 34rpx; }
+.q-target { font-size: 44rpx; font-weight: 700; color: #5e35b1; }
+.q-tip { margin-top: 8rpx; font-size: 24rpx; color: #52606d; }
+
+.side { position: absolute; right: 24rpx; top: 340rpx; }
+.zgroup { display: flex; flex-direction: column; align-items: center; background: #ffffff; border-radius: 24rpx; box-shadow: 0 4rpx 16rpx rgba(16, 42, 67, 0.25); }
+.sbtn { width: 88rpx; height: 88rpx; line-height: 88rpx; text-align: center; font-size: 44rpx; color: #0d47a1; }
+.sbtn-hover { background: #e3f2fd; border-radius: 24rpx; }
+.zlevel { min-width: 56rpx; padding: 0 12rpx; text-align: center; font-size: 24rpx; font-weight: 700; line-height: 36rpx; color: #ffffff; background: #0d47a1; border-radius: 18rpx; }
+
+.actions { position: absolute; left: 24rpx; right: 24rpx; bottom: calc(32rpx + env(safe-area-inset-bottom)); display: flex; gap: 20rpx; }
+.abtn { flex: 1; line-height: 96rpx; text-align: center; font-size: 30rpx; color: #52606d; background: #ffffff; border-radius: 24rpx; }
+.abtn-hint { color: #5e35b1; font-weight: 500; }
+.plus { margin-left: auto; font-size: 28rpx; font-weight: 700; color: #2e7d32; }
+
+/* 成绩 */
+.result { height: 100vh; }
+.summary { display: flex; align-items: center; gap: 36rpx; padding: 36rpx; }
+.ring { flex: none; width: 220rpx; height: 220rpx; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.ring-inner { width: 180rpx; height: 180rpx; border-radius: 50%; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ring-num { font-size: 56rpx; font-weight: 700; line-height: 1.1; }
+.ring-total { font-size: 30rpx; font-weight: 400; color: #52606d; }
+.ring-label { font-size: 22rpx; color: #52606d; }
+.summary-title { font-size: 38rpx; font-weight: 700; }
+.summary-desc { margin-top: 10rpx; font-size: 28rpx; line-height: 1.6; color: #3e4c59; }
+.label { margin: 8rpx 32rpx 16rpx; font-size: 26rpx; color: #52606d; }
+.rows { display: flex; flex-wrap: wrap; justify-content: space-between; padding: 0 24rpx; }
+.rrow { display: flex; align-items: center; gap: 16rpx; width: 49%; height: 88rpx; margin-bottom: 14rpx; padding: 0 24rpx; background: #ffffff; border: 1rpx solid #e4e7eb; border-radius: 20rpx; }
+.mark { width: 44rpx; line-height: 44rpx; text-align: center; font-size: 26rpx; font-weight: 700; border-radius: 50%; }
+.mark-ok { color: #2e7d32; background: #e3f1e4; }
+.mark-no { color: #b3261e; background: #fbe4e2; }
+.rname { font-size: 30rpx; }
+.result-btns { padding: 24rpx 24rpx 60rpx; }
+.result-btns .btn-row { margin-bottom: 20rpx; }

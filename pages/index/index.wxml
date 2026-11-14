@@ -1,0 +1,135 @@
+<view class="page">
+  <map
+    id="worldMap"
+    class="map"
+    longitude="{{longitude}}"
+    latitude="{{latitude}}"
+    scale="{{scale}}"
+    min-scale="{{minZoom}}"
+    max-scale="{{maxZoom}}"
+    markers="{{markers}}"
+    polyline="{{polyline}}"
+    enable-zoom
+    enable-scroll
+    enable-rotate="{{false}}"
+    enable-satellite="{{satellite}}"
+    show-scale
+    bindregionchange="onRegionChange"
+    bindmarkertap="onMarkerTap"
+    bindcallouttap="onMarkerTap"
+  ></map>
+
+  <!-- 顶部：搜索 + 分类筛选 -->
+  <view class="top">
+    <view class="search shadow">
+      <icon type="search" size="16" color="#52606d" />
+      <input class="search-input" placeholder="搜索国家、首都、山脉、河流" placeholder-class="search-ph"
+             value="{{keyword}}" confirm-type="search" bindinput="onSearchInput" />
+      <view wx:if="{{keyword}}" class="search-clear" bindtap="clearSearch">✕</view>
+    </view>
+
+    <view wx:if="{{results.length}}" class="results shadow">
+      <view class="result" hover-class="row-hover" wx:for="{{results}}" wx:key="id" data-id="{{item.id}}" bindtap="onResultTap">
+        <view class="dot" style="background: {{item.color}}"></view>
+        <text class="result-name">{{item.name}}</text>
+        <text class="result-sub">{{item.capital ? '首都 ' + item.capital : item.typeLabel}}</text>
+      </view>
+    </view>
+    <view wx:elif="{{keyword}}" class="results shadow">
+      <view class="empty">没有找到“{{keyword}}”</view>
+    </view>
+    <view wx:else class="chips">
+      <view wx:for="{{chips}}" wx:key="type" data-type="{{item.type}}" bindtap="toggleFilter"
+            class="chip shadow {{item.on ? (item.active ? 'chip-on' : 'chip-idle') : 'chip-off'}}">
+        <view class="dot" style="background: {{item.on ? item.color : '#9aa5b1'}}"></view>{{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 右侧：图层、缩放、复位 -->
+  <view class="side">
+    <view class="sbtn sbtn-text" hover-class="sbtn-hover" bindtap="openLayers">图层</view>
+    <view class="zgroup">
+      <view class="sbtn sbtn-flat" hover-class="sbtn-hover" bindtap="zoomIn">＋</view>
+      <view class="zlevel">{{zoom}}</view>
+      <view class="sbtn sbtn-flat" hover-class="sbtn-hover" bindtap="zoomOut">－</view>
+    </view>
+    <view class="sbtn sbtn-text" hover-class="sbtn-hover" bindtap="resetView">复位</view>
+  </view>
+
+  <!-- 底部：中心坐标 + 缩放层级 + 滑块 -->
+  <view wx:if="{{!selected && !showLayers}}" class="bottom">
+    <view class="center-pill">中心 {{centerText}} · 级别 {{zoom}}</view>
+    <view class="tier shadow">
+      <view class="steps">
+        <block wx:for="{{steps}}" wx:key="*this">
+          <view class="step {{index === tier ? 'step-on' : ''}}">{{item}}</view>
+          <text wx:if="{{index < 2}}" class="step-arrow">›</text>
+        </block>
+      </view>
+      <view class="slider-row">
+        <text class="slider-label">远</text>
+        <slider class="slider" min="{{minZoom}}" max="{{maxZoom}}" step="0.5" value="{{zoom}}"
+                activeColor="#0d47a1" block-size="20" bindchange="onSliderChange" />
+        <text class="slider-label">近</text>
+      </view>
+      <view class="tier-tip">{{tierTip}}</view>
+    </view>
+  </view>
+
+  <!-- 知识卡片 -->
+  <view wx:if="{{selected}}" class="sheet">
+    <view class="sheet-handle"></view>
+    <view class="sheet-head">
+      <text class="sheet-title">{{selected.name}}</text>
+      <text class="tag" style="color: #ffffff; background: {{selected.color}}">{{selected.typeLabel}}</text>
+      <text wx:if="{{selected.continent}}" class="tag">{{selected.continent}}</text>
+      <view class="sheet-close" bindtap="closeCard">✕</view>
+    </view>
+    <view wx:if="{{selected.facts.length}}" class="facts">
+      <view class="fact" wx:for="{{selected.facts}}" wx:key="k">
+        <view class="fact-k">{{item.k}}</view>
+        <view class="fact-v">{{item.v}}</view>
+      </view>
+    </view>
+    <view class="sheet-desc">{{selected.desc}}</view>
+    <view class="btn-row">
+      <view class="btn btn-ghost" hover-class="btn-hover" bindtap="onLocate">在地图上定位</view>
+      <view wx:if="{{selected.type === 'country'}}" class="btn btn-ghost" hover-class="btn-hover" bindtap="quizMe">考考我</view>
+      <view class="btn" hover-class="btn-hover" bindtap="toggleFav">{{isFav ? '已在学习清单' : '加入学习清单'}}</view>
+    </view>
+  </view>
+
+  <!-- 图层面板 -->
+  <view wx:if="{{showLayers}}" class="mask" bindtap="closeLayers"></view>
+  <view wx:if="{{showLayers}}" class="sheet" catchtap="noop">
+    <view class="sheet-handle"></view>
+    <view class="sheet-head">
+      <text class="sheet-title">图层</text>
+      <view class="sheet-close" bindtap="closeLayers">✕</view>
+    </view>
+    <view class="layer-label">底图</view>
+    <view class="tiles">
+      <view class="tile {{satellite ? '' : 'tile-on'}}" data-sat="0" bindtap="setBasemap">
+        <view class="tile-pic tile-std"></view><view class="tile-name">标准地图</view>
+      </view>
+      <view class="tile {{satellite ? 'tile-on' : ''}}" data-sat="1" bindtap="setBasemap">
+        <view class="tile-pic tile-sat"></view><view class="tile-name">卫星影像</view>
+      </view>
+    </view>
+    <view class="layer-label">显示内容</view>
+    <view class="layer-row" wx:for="{{chips}}" wx:key="type" data-type="{{item.type}}" bindtap="toggleFilter">
+      <view class="dot" style="background: {{item.color}}"></view>
+      <text class="layer-name">{{item.label}}</text>
+      <switch checked="{{item.on}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
+    </view>
+    <view class="layer-row" bindtap="toggleGrid">
+      <view class="dot" style="background: #c62828"></view>
+      <view class="layer-name">
+        <view>赤道、回归线和极圈</view>
+        <view class="layer-sub">红色实线是赤道，橙色虚线是回归线，蓝色虚线是极圈</view>
+      </view>
+      <switch checked="{{showGrid}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
+    </view>
+  </view>
+</view>
