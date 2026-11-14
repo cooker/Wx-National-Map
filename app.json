@@ -4,7 +4,8 @@
     "pages/library/library",
     "pages/quiz/quiz",
     "pages/me/me",
-    "pages/play/play"
+    "pages/play/play",
+    "pages/ask/ask"
   ],
   "window": {
     "navigationBarTitleText": "世界地理地图",

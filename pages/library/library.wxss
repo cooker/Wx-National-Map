@@ -8,3 +8,6 @@
 .cont { display: inline-block; flex-shrink: 0; margin-right: 16rpx; padding: 0 28rpx; line-height: 72rpx; font-size: 26rpx; color: #52606d; background: #ffffff; border: 1rpx solid #e4e7eb; border-radius: 36rpx; }
 .cont-on { color: #ffffff; font-weight: 700; background: #0d47a1; border-color: #0d47a1; }
 .line1 { max-width: 440rpx; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.seg-item { font-size: 26rpx; }
+.lesson { padding-top: 20rpx; padding-bottom: 20rpx; }
+.count { flex: none; }

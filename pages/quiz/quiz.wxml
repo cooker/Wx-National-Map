@@ -1,18 +1,35 @@
 <view class="panel intro">
-  <view class="intro-title">找国家测验</view>
-  <view class="intro-desc">题目给出一个国家的名字，你在地图上拖动、缩放，找到它并点一下。第一次就点对才得分。</view>
+  <view class="intro-title">地图找点</view>
+  <view class="intro-desc">题目给出一个地名，你在地图上拖动、缩放，找到它并点一下。第一次就点对才得分。</view>
 
   <view class="label">出题范围</view>
   <view class="scopes">
     <view wx:for="{{scopes}}" wx:key="name" data-name="{{item.name}}" bindtap="onScope"
           class="scope {{item.name === scope ? 'scope-on' : ''}}">
-      <view class="scope-name">{{item.name}}</view>
-      <view class="scope-count">{{item.count}} 个国家</view>
+      <view class="scope-name">{{item.label}}</view>
+      <view class="scope-count">{{item.sub}}</view>
     </view>
   </view>
 
   <view class="summary">本次共 {{count}} 题<text wx:if="{{best}}"> · 该范围最好成绩 {{best}}</text></view>
-  <view class="btn-row"><view class="btn" hover-class="btn-hover" bindtap="start">开始测验</view></view>
+  <view class="btn-row">
+    <view class="btn" hover-class="btn-hover" bindtap="start">开始测验</view>
+    <view wx:if="{{reviewCount}}" class="btn btn-ghost" hover-class="btn-hover" bindtap="startReview">错题重练（{{reviewCount}}）</view>
+  </view>
+</view>
+
+<view class="panel intro">
+  <view class="intro-title">知识问答</view>
+  <view class="intro-desc">选择题，每题答完都有讲解。先选一个专题：</view>
+  <view class="topics">
+    <view wx:for="{{topics}}" wx:key="id" data-id="{{item.id}}" bindtap="onTopic"
+          class="topic {{item.id === topic ? 'scope-on' : ''}}">
+      <view class="scope-name">{{item.label}}</view>
+      <view class="scope-count">{{item.sub}}</view>
+    </view>
+  </view>
+  <view class="summary">每次最多 10 题<text wx:if="{{askBest}}"> · 最好成绩 {{askBest}}</text></view>
+  <view class="btn-row"><view class="btn" hover-class="btn-hover" bindtap="startAsk">开始答题</view></view>
 </view>
 
 <view class="panel">

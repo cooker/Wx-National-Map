@@ -1,0 +1,45 @@
+<!-- 答题 -->
+<view wx:if="{{q}}" class="wrap">
+  <view class="q-top">
+    <text class="q-meta">第 {{q.index + 1}} / {{q.total}} 题</text>
+    <view class="progress"><view class="progress-bar" style="width: {{q.pct}}%; background: #5e35b1"></view></view>
+    <text class="q-score">得分 {{q.score}}</text>
+  </view>
+  <view class="q-text">{{q.text}}</view>
+
+  <view wx:for="{{q.options}}" wx:key="text" data-i="{{index}}" bindtap="onOption"
+        class="option {{item.state ? 'option-' + item.state : ''}}" hover-class="{{q.chosen < 0 ? 'row-hover' : ''}}">
+    <text class="option-text">{{item.text}}</text>
+    <text wx:if="{{item.state === 'right'}}" class="option-mark">正确答案</text>
+    <text wx:if="{{item.state === 'wrong'}}" class="option-mark">你的选择</text>
+  </view>
+
+  <view wx:if="{{q.chosen >= 0}}" class="explain">
+    <view class="explain-title">{{q.right ? '答对了' : '答错了'}}</view>
+    <view class="explain-text">{{q.explain}}</view>
+  </view>
+  <view wx:if="{{q.chosen >= 0}}" class="btn-row">
+    <view class="btn" hover-class="btn-hover" bindtap="next">{{q.index + 1 < q.total ? '下一题' : '查看成绩'}}</view>
+  </view>
+</view>
+
+<!-- 成绩 -->
+<view wx:if="{{result}}">
+  <view class="panel summary">
+    <view class="summary-score">{{result.score}}<text class="summary-total"> / {{result.total}}</text></view>
+    <view class="summary-desc">{{result.total}} 道题答对了 {{result.score}} 道。<text wx:if="{{result.wrongCount}}">答错的知识点已放进“我的 · 需要复习”。</text></view>
+  </view>
+  <view class="panel">
+    <view class="row review" wx:for="{{result.rows}}" wx:key="id">
+      <text class="mark {{item.ok ? 'mark-ok' : 'mark-no'}}">{{item.ok ? '✓' : '✕'}}</text>
+      <view class="row-main">
+        <view class="review-q">{{item.text}}</view>
+        <view class="row-sub">答案：{{item.answer}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="btn-row foot">
+    <view class="btn btn-ghost" hover-class="btn-hover" bindtap="again">再来一次</view>
+    <view class="btn" hover-class="btn-hover" bindtap="back">返回</view>
+  </view>
+</view>

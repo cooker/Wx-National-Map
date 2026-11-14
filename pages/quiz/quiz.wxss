@@ -10,3 +10,5 @@
 .scope-count { margin-top: 4rpx; font-size: 22rpx; color: #52606d; }
 .summary { margin: 32rpx 0 20rpx; font-size: 26rpx; color: #52606d; }
 .score { font-size: 32rpx; font-weight: 700; color: #5e35b1; }
+.topics { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 20rpx; }
+.topic { width: 48.5%; margin-bottom: 16rpx; padding: 18rpx 20rpx; border: 3rpx solid #e4e7eb; border-radius: 20rpx; }

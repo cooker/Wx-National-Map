@@ -9,6 +9,7 @@
     max-scale="{{maxZoom}}"
     markers="{{markers}}"
     polyline="{{polyline}}"
+    polygons="{{polygons}}"
     enable-zoom
     enable-scroll
     enable-rotate="{{false}}"
@@ -19,66 +20,124 @@
     bindcallouttap="onMarkerTap"
   ></map>
 
-  <!-- 顶部：搜索 + 分类筛选 -->
+  <!-- 顶部：专题课进行中显示课程条，否则显示搜索和分类筛选 -->
   <view class="top">
-    <view class="search shadow">
-      <icon type="search" size="16" color="#52606d" />
-      <input class="search-input" placeholder="搜索国家、首都、山脉、河流" placeholder-class="search-ph"
-             value="{{keyword}}" confirm-type="search" bindinput="onSearchInput" />
-      <view wx:if="{{keyword}}" class="search-clear" bindtap="clearSearch">✕</view>
+    <view wx:if="{{lesson}}" class="lesson-bar shadow">
+      <view class="lesson-bar-row">
+        <text class="lesson-bar-tag">专题课</text>
+        <text class="lesson-bar-title">{{lesson.title}}</text>
+        <text class="lesson-bar-count">{{lesson.index + 1}} / {{lesson.total}}</text>
+        <view class="lesson-exit" bindtap="exitLesson">退出</view>
+      </view>
+      <view class="progress"><view class="progress-bar lesson-progress" style="width: {{lesson.pct}}%"></view></view>
     </view>
 
-    <view wx:if="{{results.length}}" class="results shadow">
-      <view class="result" hover-class="row-hover" wx:for="{{results}}" wx:key="id" data-id="{{item.id}}" bindtap="onResultTap">
-        <view class="dot" style="background: {{item.color}}"></view>
-        <text class="result-name">{{item.name}}</text>
-        <text class="result-sub">{{item.capital ? '首都 ' + item.capital : item.typeLabel}}</text>
+    <block wx:else>
+      <view class="search shadow">
+        <icon type="search" size="16" color="#52606d" />
+        <input class="search-input" placeholder="搜索国家、首都、山脉、河流" placeholder-class="search-ph"
+               value="{{keyword}}" confirm-type="search" bindinput="onSearchInput" />
+        <view wx:if="{{keyword}}" class="search-clear" bindtap="clearSearch">✕</view>
       </view>
-    </view>
-    <view wx:elif="{{keyword}}" class="results shadow">
-      <view class="empty">没有找到“{{keyword}}”</view>
-    </view>
-    <view wx:else class="chips">
-      <view wx:for="{{chips}}" wx:key="type" data-type="{{item.type}}" bindtap="toggleFilter"
-            class="chip shadow {{item.on ? (item.active ? 'chip-on' : 'chip-idle') : 'chip-off'}}">
-        <view class="dot" style="background: {{item.on ? item.color : '#9aa5b1'}}"></view>{{item.label}}
+
+      <view wx:if="{{results.length}}" class="results shadow">
+        <view class="result" hover-class="row-hover" wx:for="{{results}}" wx:key="id" data-id="{{item.id}}" bindtap="onResultTap">
+          <view class="dot" style="background: {{item.color}}"></view>
+          <text class="result-name">{{item.name}}</text>
+          <text class="result-sub">{{item.capital ? '首都 ' + item.capital : item.typeLabel}}</text>
+        </view>
       </view>
+      <view wx:elif="{{keyword}}" class="results shadow">
+        <view class="empty">没有找到“{{keyword}}”</view>
+      </view>
+      <scroll-view wx:else class="chips" scroll-x>
+        <view wx:for="{{chips}}" wx:key="type" data-type="{{item.type}}" bindtap="toggleFilter"
+              class="chip {{item.on ? (item.active ? 'chip-on' : 'chip-idle') : 'chip-off'}}">
+          <view class="dot" style="background: {{item.on ? item.color : '#9aa5b1'}}"></view>{{item.label}}
+        </view>
+      </scroll-view>
+    </block>
+
+    <!-- 五带图例 -->
+    <view wx:if="{{legends.zones}}" class="legend shadow">
+      <view class="legend-item"><view class="legend-box" style="background: #f6c79a"></view>热带</view>
+      <view class="legend-item"><view class="legend-box" style="background: #b9d9bb"></view>温带</view>
+      <view class="legend-item"><view class="legend-box" style="background: #a9c8e8"></view>寒带</view>
     </view>
+    <view wx:if="{{legends.currents}}" class="legend shadow">
+      <view class="legend-item"><view class="legend-box" style="background: #d32f2f"></view>暖流</view>
+      <view class="legend-item"><view class="legend-box" style="background: #1565c0"></view>寒流</view>
+    </view>
+    <view wx:if="{{legends.belts}}" class="legend shadow">
+      <view class="legend-item"><view class="legend-box" style="background: #f0a09e"></view>低气压带</view>
+      <view class="legend-item"><view class="legend-box" style="background: #9fc9f0"></view>高气压带</view>
+      <view class="legend-item">箭头是风向</view>
+    </view>
+    <view wx:if="{{legends.climate}}" class="legend shadow" bindtap="openLegend">气候类型和自然带（示意）· 看图例 ›</view>
+    <view wx:if="{{legends.iso}}" class="legend shadow">1 月等温线（示意）</view>
+    <view wx:if="{{hideNames && !lesson}}" class="legend shadow">自测中：先说出名字，再点标记看答案</view>
   </view>
 
-  <!-- 右侧：图层、缩放、复位 -->
+  <!-- 右侧工具条：课程和图层、缩放、复位 -->
   <view class="side">
-    <view class="sbtn sbtn-text" hover-class="sbtn-hover" bindtap="openLayers">图层</view>
-    <view class="zgroup">
-      <view class="sbtn sbtn-flat" hover-class="sbtn-hover" bindtap="zoomIn">＋</view>
-      <view class="zlevel">{{zoom}}</view>
-      <view class="sbtn sbtn-flat" hover-class="sbtn-hover" bindtap="zoomOut">－</view>
+    <view class="tool">
+      <view wx:if="{{!lesson}}" class="tbtn tbtn-main" hover-class="tbtn-main-hover" bindtap="openLessons">课程</view>
+      <view class="tbtn" hover-class="tbtn-hover" bindtap="openLayers">图层</view>
     </view>
-    <view class="sbtn sbtn-text" hover-class="sbtn-hover" bindtap="resetView">复位</view>
+    <view class="tool">
+      <view class="tbtn" hover-class="tbtn-hover" bindtap="zoomIn"><view class="ico-h"></view><view class="ico-v"></view></view>
+      <view class="zlevel">{{zoom}}</view>
+      <view class="tbtn" hover-class="tbtn-hover" bindtap="zoomOut"><view class="ico-h"></view></view>
+    </view>
+    <view wx:if="{{!lesson}}" class="tool">
+      <view class="tbtn" hover-class="tbtn-hover" bindtap="resetView">复位</view>
+    </view>
   </view>
 
-  <!-- 底部：中心坐标 + 缩放层级 + 滑块 -->
-  <view wx:if="{{!selected && !showLayers}}" class="bottom">
-    <view class="center-pill">中心 {{centerText}} · 级别 {{zoom}}</view>
-    <view class="tier shadow">
-      <view class="steps">
-        <block wx:for="{{steps}}" wx:key="*this">
-          <view class="step {{index === tier ? 'step-on' : ''}}">{{item}}</view>
-          <text wx:if="{{index < 2}}" class="step-arrow">›</text>
-        </block>
+  <!-- 底部：缩放条（做得矮一些，少挡地图） -->
+  <view wx:if="{{!selected && !lesson && !showLayers && !showLessons && !showLegend}}" class="bottom">
+    <view class="bar-head">
+      <text class="bar-tier">显示：{{tierName}}</text>
+      <text class="bar-info">级别 {{zoom}} · {{centerText}}</text>
+    </view>
+    <view class="slider-row">
+      <text class="slider-label">远</text>
+      <slider class="slider" min="{{minZoom}}" max="{{maxZoom}}" step="1" value="{{zoom}}"
+              activeColor="#0d47a1" backgroundColor="#d9e0e7" block-size="18" bindchange="onSliderChange" />
+      <text class="slider-label">近</text>
+    </view>
+  </view>
+
+  <!-- 专题课讲解卡片 -->
+  <view wx:if="{{lesson && !showLayers}}" class="sheet">
+    <view class="sheet-handle"></view>
+    <view wx:if="{{lesson.isFirst}}" class="lesson-intro">{{lesson.intro}}</view>
+    <view class="sheet-head">
+      <text class="lesson-no" style="background: {{lesson.item.color}}">{{lesson.index + 1}}</text>
+      <text class="sheet-title lesson-name">{{lesson.item.name}}</text>
+      <text class="tag">{{lesson.item.typeLabel}}</text>
+      <view class="fav" bindtap="toggleFav">{{isFav ? '★ 已收藏' : '☆ 收藏'}}</view>
+    </view>
+    <view wx:if="{{lesson.note}}" class="lesson-note">{{lesson.note}}</view>
+    <view wx:if="{{lesson.item.facts.length}}" class="facts">
+      <view class="fact" wx:for="{{lesson.item.facts}}" wx:key="k">
+        <view class="fact-k">{{item.k}}</view>
+        <view class="fact-v">{{item.v}}</view>
       </view>
-      <view class="slider-row">
-        <text class="slider-label">远</text>
-        <slider class="slider" min="{{minZoom}}" max="{{maxZoom}}" step="0.5" value="{{zoom}}"
-                activeColor="#0d47a1" block-size="20" bindchange="onSliderChange" />
-        <text class="slider-label">近</text>
-      </view>
-      <view class="tier-tip">{{tierTip}}</view>
+    </view>
+    <view wx:if="{{lesson.item.coord}}" class="sheet-meta">{{lesson.item.type === 'country' ? '首都位置' : '位置'}} {{lesson.item.coord}} · 按经度算在{{lesson.item.zone}}</view>
+    <view class="sheet-desc lesson-desc">{{lesson.item.desc}}</view>
+    <view wx:if="{{lesson.item.points.length}}" class="points">
+      <view class="point lesson-point" wx:for="{{lesson.item.points}}" wx:key="*this">{{item}}</view>
+    </view>
+    <view class="btn-row">
+      <view class="btn btn-ghost {{lesson.isFirst ? 'btn-disabled' : ''}}" hover-class="btn-hover" bindtap="lessonPrev">上一个</view>
+      <view class="btn" hover-class="btn-hover" bindtap="lessonNext">{{lesson.isLast ? '学完了' : '下一个'}}</view>
     </view>
   </view>
 
   <!-- 知识卡片 -->
-  <view wx:if="{{selected}}" class="sheet">
+  <view wx:if="{{selected && !lesson}}" class="sheet">
     <view class="sheet-handle"></view>
     <view class="sheet-head">
       <text class="sheet-title">{{selected.name}}</text>
@@ -92,12 +151,59 @@
         <view class="fact-v">{{item.v}}</view>
       </view>
     </view>
+    <view wx:if="{{selected.coord}}" class="sheet-meta">{{selected.type === 'country' ? '首都位置' : '位置'}} {{selected.coord}} · 按经度算在{{selected.zone}}</view>
     <view class="sheet-desc">{{selected.desc}}</view>
+    <view wx:if="{{selected.points.length}}" class="points">
+      <view class="points-title">知识要点</view>
+      <view class="point" wx:for="{{selected.points}}" wx:key="*this">{{item}}</view>
+    </view>
+    <view wx:if="{{selected.type === 'country'}}" class="data-note">面积、人口为约数</view>
     <view class="btn-row">
       <view class="btn btn-ghost" hover-class="btn-hover" bindtap="onLocate">在地图上定位</view>
       <view wx:if="{{selected.type === 'country'}}" class="btn btn-ghost" hover-class="btn-hover" bindtap="quizMe">考考我</view>
       <view class="btn" hover-class="btn-hover" bindtap="toggleFav">{{isFav ? '已在学习清单' : '加入学习清单'}}</view>
     </view>
+  </view>
+
+  <!-- 专题课列表 -->
+  <view wx:if="{{showLessons}}" class="mask" bindtap="closeLessons"></view>
+  <view wx:if="{{showLessons}}" class="sheet" catchtap="noop">
+    <view class="sheet-handle"></view>
+    <view class="sheet-head">
+      <text class="sheet-title">专题课</text>
+      <text class="panel-sub">选一个主题，在地图上逐个讲解</text>
+      <view class="sheet-close" bindtap="closeLessons">✕</view>
+    </view>
+    <scroll-view class="lesson-list" scroll-y>
+      <view class="lesson-row" hover-class="row-hover" wx:for="{{lessonList}}" wx:key="id" data-id="{{item.id}}" bindtap="onLessonTap">
+        <view class="row-main">
+          <view class="row-name">{{item.title}}</view>
+          <view class="row-sub">{{item.intro}}</view>
+        </view>
+        <text class="lesson-count">{{item.done ? '已学完' : item.count + ' 个知识点'}}</text>
+        <text class="row-arrow">›</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 气候类型和自然带图例 -->
+  <view wx:if="{{showLegend}}" class="mask" bindtap="closeLegend"></view>
+  <view wx:if="{{showLegend}}" class="sheet" catchtap="noop">
+    <view class="sheet-handle"></view>
+    <view class="sheet-head">
+      <text class="sheet-title">气候类型和自然带</text>
+      <view class="sheet-close" bindtap="closeLegend">✕</view>
+    </view>
+    <view class="legend-note">色块是手工画的示意图，只表示大致分布。</view>
+    <scroll-view class="layer-scroll" scroll-y>
+      <view class="clim-row" wx:for="{{climateLegend}}" wx:key="name">
+        <view class="clim-box" style="background: {{item.color}}"></view>
+        <view class="row-main">
+          <view class="clim-name">{{item.name}}</view>
+          <view class="row-sub">对应自然带：{{item.zone}}</view>
+        </view>
+      </view>
+    </scroll-view>
   </view>
 
   <!-- 图层面板 -->
@@ -108,28 +214,81 @@
       <text class="sheet-title">图层</text>
       <view class="sheet-close" bindtap="closeLayers">✕</view>
     </view>
-    <view class="layer-label">底图</view>
-    <view class="tiles">
-      <view class="tile {{satellite ? '' : 'tile-on'}}" data-sat="0" bindtap="setBasemap">
-        <view class="tile-pic tile-std"></view><view class="tile-name">标准地图</view>
+    <scroll-view class="layer-scroll" scroll-y>
+      <view class="layer-label">底图</view>
+      <view class="tiles">
+        <view class="tile {{satellite ? '' : 'tile-on'}}" data-sat="0" bindtap="setBasemap">
+          <view class="tile-pic tile-std"></view><view class="tile-name">标准地图</view>
+        </view>
+        <view class="tile {{satellite ? 'tile-on' : ''}}" data-sat="1" bindtap="setBasemap">
+          <view class="tile-pic tile-sat"></view><view class="tile-name">卫星影像</view>
+        </view>
       </view>
-      <view class="tile {{satellite ? 'tile-on' : ''}}" data-sat="1" bindtap="setBasemap">
-        <view class="tile-pic tile-sat"></view><view class="tile-name">卫星影像</view>
+
+      <view class="layer-label">学习辅助</view>
+      <view class="layer-row" bindtap="toggleGrid">
+        <view class="dot" style="background: #c62828"></view>
+        <view class="layer-name">
+          <view>重要的经线和纬线</view>
+          <view class="layer-sub">红色是赤道，橙色是回归线，蓝色是极圈；灰色是0°和180°经线，紫色是东西半球分界线</view>
+        </view>
+        <switch checked="{{showGrid}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
       </view>
-    </view>
-    <view class="layer-label">显示内容</view>
-    <view class="layer-row" wx:for="{{chips}}" wx:key="type" data-type="{{item.type}}" bindtap="toggleFilter">
-      <view class="dot" style="background: {{item.color}}"></view>
-      <text class="layer-name">{{item.label}}</text>
-      <switch checked="{{item.on}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
-    </view>
-    <view class="layer-row" bindtap="toggleGrid">
-      <view class="dot" style="background: #c62828"></view>
-      <view class="layer-name">
-        <view>赤道、回归线和极圈</view>
-        <view class="layer-sub">红色实线是赤道，橙色虚线是回归线，蓝色虚线是极圈</view>
+      <view class="layer-row" bindtap="toggleZones">
+        <view class="dot" style="background: #ef6c00"></view>
+        <view class="layer-name">
+          <view>五带</view>
+          <view class="layer-sub">用色块标出热带、南北温带、南北寒带</view>
+        </view>
+        <switch checked="{{showZones}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
       </view>
-      <switch checked="{{showGrid}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
-    </view>
+      <view class="layer-row" bindtap="toggleCurrents">
+        <view class="dot" style="background: #d32f2f"></view>
+        <view class="layer-name">
+          <view>洋流流向（高中）</view>
+          <view class="layer-sub">红色箭头是暖流，蓝色箭头是寒流</view>
+        </view>
+        <switch checked="{{showCurrents}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
+      </view>
+      <view class="layer-row" bindtap="toggleBelts">
+        <view class="dot" style="background: #1e88e5"></view>
+        <view class="layer-name">
+          <view>气压带和风带（高中）</view>
+          <view class="layer-sub">红色是低气压带，蓝色是高气压带，箭头是风向</view>
+        </view>
+        <switch checked="{{showBelts}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
+      </view>
+      <view class="layer-row" bindtap="toggleClimate">
+        <view class="dot" style="background: #1b5e20"></view>
+        <view class="layer-name">
+          <view>气候类型和自然带（高中，示意）</view>
+          <view class="layer-sub">用色块标出 12 种气候的大致分布，自然带与它一一对应</view>
+        </view>
+        <switch checked="{{showClimate}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
+      </view>
+      <view class="layer-row" bindtap="toggleIso">
+        <view class="dot" style="background: #e53935"></view>
+        <view class="layer-name">
+          <view>1 月等温线（高中，示意）</view>
+          <view class="layer-sub">北半球冬季：等温线在大陆上向南弯，在海洋上向北弯</view>
+        </view>
+        <switch checked="{{showIso}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
+      </view>
+      <view class="layer-row" bindtap="toggleHideNames">
+        <view class="dot" style="background: #5e35b1"></view>
+        <view class="layer-name">
+          <view>自测（隐藏名字）</view>
+          <view class="layer-sub">标记只显示“？”，先自己说出名字，再点开看答案</view>
+        </view>
+        <switch checked="{{hideNames}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
+      </view>
+
+      <view class="layer-label">显示哪些知识点</view>
+      <view class="layer-row" wx:for="{{chips}}" wx:key="type" data-type="{{item.type}}" bindtap="toggleFilter">
+        <view class="dot" style="background: {{item.color}}"></view>
+        <text class="layer-name">{{item.label}}</text>
+        <switch checked="{{item.on}}" color="#0d47a1" style="pointer-events: none; transform: scale(0.8)" />
+      </view>
+    </scroll-view>
   </view>
 </view>

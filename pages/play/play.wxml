@@ -44,7 +44,7 @@
     <view class="sheet-handle"></view>
     <view class="sheet-head">
       <text class="sheet-title">{{q.skipped ? '答案：' : '找对了：'}}{{q.solved.name}}</text>
-      <text class="tag">{{q.solved.continent}}</text>
+      <text class="tag">{{q.solved.continent || q.solved.typeLabel}}</text>
       <text wx:if="{{q.first}}" class="plus">+1 分</text>
     </view>
     <view class="facts">
@@ -71,7 +71,7 @@
     </view>
     <view class="summary-text">
       <view class="summary-title">测验完成</view>
-      <view class="summary-desc">{{result.total}} 道题中，你一次就找对了 {{result.score}} 个国家。<text wx:if="{{result.wrongCount}}">还有 {{result.wrongCount}} 个已放进“我的 · 需要复习”。</text></view>
+      <view class="summary-desc">{{result.total}} 道题中，你一次就找对了 {{result.score}} 个。<text wx:if="{{result.wrongCount}}">还有 {{result.wrongCount}} 个已放进“我的 · 需要复习”。</text></view>
     </view>
   </view>
 
@@ -85,7 +85,7 @@
 
   <view class="result-btns">
     <view wx:if="{{result.wrongCount}}" class="btn-row">
-      <view class="btn" hover-class="btn-hover" bindtap="reviewWrong">到地图上复习答错的国家</view>
+      <view class="btn" hover-class="btn-hover" bindtap="reviewWrong">到地图上复习答错的知识点</view>
     </view>
     <view class="btn-row">
       <view class="btn btn-ghost" hover-class="btn-hover" bindtap="again">再来一次</view>

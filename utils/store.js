@@ -47,8 +47,19 @@ module.exports = {
     write('records', list.slice(0, 20))
   },
 
+  // 地图的显示设置（筛选、图层），下次打开时恢复
+  prefs: () => read('mapPrefs', {}),
+  savePrefs: p => write('mapPrefs', p),
+
+  // 讲完的专题课（按课名记）
+  lessonsDone: () => read('lessonsDone', {}),
+  markLesson(title) {
+    const m = read('lessonsDone', {})
+    if (!m[title]) { m[title] = true; write('lessonsDone', m) }
+  },
+
   clearAll() {
-    ['learned', 'favs', 'review', 'records'].forEach(k => {
+    ['learned', 'favs', 'review', 'records', 'lessonsDone'].forEach(k => {
       try { wx.removeStorageSync(k) } catch (e) {}
     })
   }

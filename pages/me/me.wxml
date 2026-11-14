@@ -9,7 +9,7 @@
 </view>
 
 <view class="panel">
-  <view class="panel-head"><text class="panel-title">需要复习</text><text class="panel-sub">测验里没有一次找对的国家</text></view>
+  <view class="panel-head"><text class="panel-title">需要复习</text><text class="panel-sub">测验里答错的知识点</text></view>
   <view class="row" wx:for="{{review}}" wx:key="id">
     <view class="dot" style="background: {{item.color}}"></view>
     <view class="row-main" data-id="{{item.id}}" bindtap="onRowTap">
@@ -18,7 +18,7 @@
     </view>
     <view class="link" data-name="{{item.name}}" bindtap="onReviewed">已掌握</view>
   </view>
-  <view wx:if="{{!review.length}}" class="empty">暂时没有需要复习的国家</view>
+  <view wx:if="{{!review.length}}" class="empty">暂时没有需要复习的知识点</view>
 </view>
 
 <view class="panel">

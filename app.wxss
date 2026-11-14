@@ -9,13 +9,13 @@ page {
 view, input, scroll-view { box-sizing: border-box; }
 
 /* 通用小部件 */
-.shadow { box-shadow: 0 4rpx 16rpx rgba(16, 42, 67, 0.18); }
+.shadow { border: 1rpx solid #d9e0e7; box-shadow: 0 2rpx 10rpx rgba(16, 42, 67, 0.16); }
 .tag { margin-right: 10rpx; padding: 2rpx 14rpx; font-size: 22rpx; color: #3e4c59; background: #e4e7eb; border-radius: 6rpx; }
 .dot { flex: none; width: 18rpx; height: 18rpx; border-radius: 50%; }
-.btn { flex: 1; line-height: 84rpx; text-align: center; font-size: 30rpx; font-weight: 500; color: #ffffff; background: #0d47a1; border-radius: 16rpx; }
-.btn-ghost { color: #0d47a1; background: #ffffff; border: 3rpx solid #0d47a1; line-height: 78rpx; }
-.btn-hover { opacity: 0.8; }
-.btn-row { display: flex; gap: 20rpx; }
+.btn { flex: 1; height: 84rpx; line-height: 84rpx; text-align: center; font-size: 28rpx; font-weight: 500; color: #ffffff; background: #0d47a1; border-radius: 12rpx; white-space: nowrap; }
+.btn-ghost { color: #0d47a1; background: #ffffff; border: 2rpx solid #b9c7d8; line-height: 80rpx; }
+.btn-hover { opacity: 0.75; }
+.btn-row { display: flex; gap: 16rpx; }
 
 .facts { display: flex; flex-wrap: wrap; justify-content: space-between; }
 .fact { width: 48.5%; margin-bottom: 14rpx; padding: 14rpx 20rpx; background: #f5f7fa; border-radius: 12rpx; }
@@ -27,7 +27,7 @@ view, input, scroll-view { box-sizing: border-box; }
 .sheet-head { display: flex; align-items: center; margin-bottom: 20rpx; }
 .sheet-title { margin-right: 16rpx; font-size: 38rpx; font-weight: 700; }
 .sheet-close { margin-left: auto; width: 72rpx; line-height: 72rpx; text-align: center; font-size: 32rpx; color: #52606d; }
-.sheet-desc { margin: 6rpx 0 24rpx; font-size: 28rpx; line-height: 1.6; color: #3e4c59; }
+.sheet-desc { margin: 6rpx 0 24rpx; font-size: 30rpx; line-height: 1.6; color: #3e4c59; }
 
 .progress { flex: 1; height: 12rpx; border-radius: 6rpx; background: #e4e7eb; overflow: hidden; }
 .progress-bar { height: 12rpx; background: #2e7d32; }

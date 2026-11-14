@@ -13,6 +13,18 @@
   </scroll-view>
 </view>
 
+<view wx:if="{{tab === 3}}" class="panel">
+  <view class="panel-head"><text class="panel-title">专题课</text><text class="panel-sub">点一节课，回到地图上逐个讲解</text></view>
+  <view class="row lesson" hover-class="row-hover" wx:for="{{lessonList}}" wx:key="id" data-id="{{item.id}}" bindtap="onLessonTap">
+    <view class="row-main">
+      <view class="row-name">{{item.title}}</view>
+      <view class="row-sub">{{item.intro}}</view>
+    </view>
+    <text class="row-sub count">{{item.count}} 个</text>
+    <text class="row-arrow">›</text>
+  </view>
+</view>
+
 <view class="panel" wx:for="{{groups}}" wx:key="title" wx:for-item="g">
   <view class="panel-head">
     <text class="panel-title">{{g.title}}</text>
@@ -29,4 +41,4 @@
     <text class="row-arrow">›</text>
   </view>
 </view>
-<view wx:if="{{!groups.length}}" class="empty">没有找到“{{keyword}}”</view>
+<view wx:if="{{tab !== 3 && !groups.length}}" class="empty">没有找到“{{keyword}}”</view>

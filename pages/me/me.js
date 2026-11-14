@@ -20,7 +20,7 @@ Page({
       progress: [
         bar('大洲和大洋', geo.continents.concat(geo.oceans), geo.TYPE_COLOR.continent),
         bar('国家', geo.countries, geo.TYPE_COLOR.country),
-        bar('山河湖海', geo.features, geo.TYPE_COLOR.feature)
+        bar('地理事物', geo.features.concat(geo.regions, geo.grids, geo.physical), geo.TYPE_COLOR.feature)
       ],
       favs: rows(store.favs()),
       review: rows(store.review())
