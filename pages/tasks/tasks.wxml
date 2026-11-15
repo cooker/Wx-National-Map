@@ -1,0 +1,38 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <view class="hero skyblue">
+      <view class="en">DAILY MISSIONS</view>
+      <view class="h1">今天学会三件事</view>
+      <view class="lead">任务进度按不同国家记录。每天挑一项开始。</view>
+      <image class="guide" src="/images/explorer.png" mode="aspectFit" />
+    </view>
+
+    <!-- 连续学习天数 -->
+    <view class="ribbon streakbar">
+      <view style="flex: 1"><view class="b">连续学习</view><view>{{streak.text}}</view></view>
+      <text class="streak-n">{{streak.n}} 天</text>
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">今日任务</view><view class="small">每日刷新</view></view>
+      <view class="stack">
+        <view class="task" wx:for="{{list}}" wx:key="id">
+          <view class="row">
+            <view class="chipicon {{item.tone}}">{{item.icon}}</view>
+            <view style="flex: 1"><view class="h3">{{item.name}}</view><view class="minor">★ +{{item.points}} 积分</view></view>
+            <text class="badge {{item.status === 'todo' ? 'purple' : 'green'}}">{{item.n}} / {{item.need}}</text>
+          </view>
+          <view class="task-text">{{item.text}}</view>
+          <view class="barrow">
+            <view class="progress" style="flex: 1"><view class="i" style="width: {{item.pct}}%"></view></view>
+            <view class="btn smallbtn {{item.status === 'done' ? 'green' : 'white'}} {{item.status === 'claimed' ? 'off' : ''}}" hover-class="btn-hover" data-i="{{index}}" bindtap="act">{{item.btn}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="note">同一国家换拼图难度，只算一个国家。完成任务后要在这里点“领取”才会加积分。连续学习只记天数，不加积分。</view>
+  </view>
+  <view class="foot"><view class="btn white" hover-class="btn-hover" bindtap="home">返回探索首页</view></view>
+</view>

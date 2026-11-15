@@ -1,0 +1,45 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view wx:if="{{r}}" class="body">
+    <view class="whitehead">
+      <view class="en">PUZZLE COMPLETE</view>
+      <view class="h1">{{r.name}}拼成了</view>
+      <view class="lead">{{r.diff}} · {{r.n}} 片 · {{r.mastery}}</view>
+    </view>
+
+    <view class="panel">
+      <view class="board pz">
+        <text class="north">N\n▲</text>
+        <view class="pz-area">
+          <image class="pz-base" src="{{base}}" />
+          <image wx:for="{{pieces}}" wx:key="k" class="pz-piece" src="{{item.src}}" style="{{item.style}}" />
+        </view>
+      </view>
+      <view class="space"></view>
+      <view class="stats">
+        <view class="stat"><view class="b">{{r.n}}/{{r.n}}</view><view class="s">已拼片数</view></view>
+        <view class="stat"><view class="b">{{r.mastery}}</view><view class="s">地理追问</view></view>
+        <view class="stat"><view class="b">+{{r.xp}}</view><view class="s">经验</view></view>
+      </view>
+      <view wx:if="{{!r.xp}}" class="caption">这一关以前通关过，重玩不重复发经验。</view>
+      <view wx:if="{{r.levelUp}}" class="note" style="margin-top: 18rpx">升级了！现在是 Lv.{{r.levelUp}}。</view>
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">这一关学到的</view></view>
+      <view class="question">{{r.q}}</view>
+      <view class="row tags">
+        <text wx:if="{{r.firstAnswer !== r.answer}}" class="badge red">✕ 首答：{{r.firstAnswer}}</text>
+        <text class="badge green">✓ 正确：{{r.answer}}</text>
+      </view>
+      <view class="leadcopy">{{r.why}}</view>
+    </view>
+  </view>
+
+  <view class="foot">
+    <view class="btn white compact" hover-class="btn-hover" bindtap="home">🏠</view>
+    <view class="btn white" hover-class="btn-hover" bindtap="share">邀请同学</view>
+    <view class="btn white" hover-class="btn-hover" bindtap="again">再拼一次</view>
+    <view class="btn green" hover-class="btn-hover" bindtap="other">换个国家</view>
+  </view>
+</view>

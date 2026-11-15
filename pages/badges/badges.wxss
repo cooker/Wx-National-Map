@@ -1,0 +1,8 @@
+.medals { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.medals::after { content: ""; width: 31.5%; }
+.medal { width: 31.5%; margin-bottom: 16rpx; padding: 24rpx 6rpx; text-align: center; background: #fffbef; border: 2rpx solid #e4d2ae; border-radius: 26rpx; }
+.medal.lock { background: #f1ede4; }
+.medal.lock .medal-icon { filter: grayscale(0.9); opacity: 0.59; }
+.medal-icon { margin: 8rpx 0; font-size: 76rpx; line-height: 1.1; }
+.medal-name { font-size: 26rpx; font-weight: 800; }
+.medal-sub { margin-top: 6rpx; font-size: 20rpx; color: #615846; }

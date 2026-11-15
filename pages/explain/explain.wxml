@@ -1,0 +1,58 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view wx:if="{{row}}" class="body">
+    <view class="ribbon"><text class="b">第 {{row.no}} / {{total}} 题</text><text>{{row.kind}} · {{firstText}}</text></view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">{{isMap ? '请在地图上找到：' + c.name : '这面国旗属于哪个国家？'}}</view></view>
+      <view wx:if="{{isMap}}" class="board mapbox">
+        <text class="north">N\n▲</text>
+        <geo-map class="fill" view="{{mapView}}" marks="{{marks}}" pickable="{{false}}" />
+      </view>
+      <block wx:else>
+        <image class="flagbig" src="{{c.flag}}" mode="aspectFit" />
+        <view class="stack">
+          <view wx:for="{{options}}" wx:key="id" class="option {{item.state}}">
+            <text>{{item.name}}</text>
+            <text wx:if="{{item.state === 'good'}}" class="mark ok">✓ 正确答案</text>
+            <text wx:if="{{item.state === 'bad'}}" class="mark no">✕ 你的选择</text>
+          </view>
+        </view>
+      </block>
+      <view class="row tags">
+        <text wx:if="{{row.wrong && chosenName}}" class="badge red">✕ 首答：{{chosenName}}</text>
+        <text wx:if="{{row.state === 'timeout'}}" class="badge red">超时未答</text>
+        <text wx:if="{{row.state === 'skip'}}" class="badge dim">已跳过</text>
+        <text wx:if="{{row.state === 'none'}}" class="badge dim">未作答</text>
+        <text class="badge green">✓ 正确：{{c.name}}</text>
+      </view>
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">{{isMap ? '为什么是' + c.name + '？' : '怎样认出这面旗？'}}</view></view>
+      <view class="leadcopy">{{why}}</view>
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">{{row.wrong ? '试试订正' : '再答一道追问'}}</view><view class="small">不限时</view></view>
+      <view class="leadcopy">{{q}}</view>
+      <view class="space"></view>
+      <view class="stack">
+        <view wx:for="{{choices}}" wx:key="text" data-text="{{item.text}}" bindtap="choose"
+              class="option {{item.state}}" hover-class="{{done ? '' : 'tile-hover'}}">
+          <text>{{item.text}}</text>
+          <text wx:if="{{item.state === 'good'}}" class="mark ok">✓</text>
+          <text wx:if="{{item.state === 'bad'}}" class="mark no">✕</text>
+        </view>
+      </view>
+      <view wx:if="{{tryAgain && !done}}" class="caption">再读一遍上面的解析，换一个选项试试。</view>
+      <view wx:if="{{done}}" class="caption ok">{{row.wrong ? '已订正。原来那一局的成绩不会改变。' : '答对了。'}}</view>
+    </view>
+  </view>
+
+  <view class="foot">
+    <view class="btn white" hover-class="btn-hover" bindtap="atlas">国家图鉴</view>
+    <view wx:if="{{nextWrong >= 0}}" class="btn" hover-class="btn-hover" bindtap="next">下一道错题 ›</view>
+    <view wx:else class="btn white" hover-class="btn-hover" bindtap="back">返回</view>
+  </view>
+</view>

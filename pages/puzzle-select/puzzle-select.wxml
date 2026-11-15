@@ -1,0 +1,36 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <view class="hero">
+      <view class="en">COUNTRY PUZZLES</view>
+      <view class="h1">拼出一个国家</view>
+      <view class="lead">看形状、辨朝向，再发现一条地理线索。</view>
+      <view class="heroicon">🧩</view>
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">先选一个国家</view><view class="small">可用关卡</view></view>
+      <view class="cgrid">
+        <view wx:for="{{list}}" wx:key="iso" data-iso="{{item.iso}}" bindtap="pick" class="ccard {{item.iso === iso ? 'on' : ''}}">
+          <image class="sil" src="{{item.img}}" mode="aspectFit" />
+          <view class="cname">{{item.name}}</view>
+          <view class="csub">{{item.continent}}{{item.cleared ? ' · 已通关 ' + item.cleared + ' 关' : ''}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">再选难度</view><view class="small">不限时 · 没有爱心</view></view>
+      <view class="tabs in">
+        <view wx:for="{{diffs}}" wx:key="n" data-n="{{item.n}}" bindtap="diff" class="tab {{item.n === n ? 'on' : ''}}">{{item.name}} · {{item.n}} 片</view>
+      </view>
+      <view class="caption">{{tip}}。</view>
+    </view>
+
+    <view class="note">碎片保持朝北，不旋转、不翻面。拼错不扣分；拼完后答对一道地理追问才算通关。</view>
+  </view>
+
+  <view class="foot">
+    <view class="btn green" hover-class="btn-hover" bindtap="start">开始拼{{name}}</view>
+  </view>
+</view>

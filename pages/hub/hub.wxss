@@ -1,0 +1,8 @@
+.modecard { position: relative; min-height: 240rpx; padding: 32rpx 34rpx; overflow: hidden; border: 6rpx solid #fff4dc; border-radius: 42rpx; box-shadow: 0 6rpx #356aab, inset 0 4rpx 8rpx #ffffffaa; }
+.purplecard { color: #493071; background: linear-gradient(130deg, #e3d2ff, #bb91fa); }
+.greencard { color: #214e2f; background: linear-gradient(130deg, #e0fbc0, #90df79); }
+.modecard .num { margin-bottom: 12rpx; }
+.mc-title { font-size: 46rpx; font-weight: 900; }
+.mc-text { display: block; margin-top: 10rpx; font-size: 26rpx; }
+.modecard .heroicon { font-size: 156rpx; }
+.code-input { flex: 1; height: 80rpx; padding: 0 28rpx; font-family: Menlo, monospace; font-size: 36rpx; font-weight: 800; letter-spacing: 6rpx; color: #284b80; background: #ffffff; border: 3rpx solid #d8b777; border-radius: 24rpx; }

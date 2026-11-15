@@ -1,0 +1,63 @@
+<view class="page game">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body game-body">
+    <!-- 题号、倒计时、爱心 -->
+    <view class="between">
+      <view class="pill">第 {{qNo}} / {{total}} 题</view>
+      <view class="pill clock {{low ? 'low' : ''}}">⏱ {{feedback ? (feedback.state === 'timeout' ? '时间到' : '已提交 · ' + timeText) : timeText}}</view>
+    </view>
+    <view class="hearts"><text wx:for="{{hearts}}" wx:key="index" class="heart {{item ? '' : 'empty'}}">♥</text></view>
+
+    <!-- 地图题 -->
+    <block wx:if="{{type === 'map'}}">
+      <view class="ask-card">
+        <view class="ask-small">{{feedback ? '正确位置：' : '请在地图上找到：'}}</view>
+        <view class="ask-name">{{name}}</view>
+      </view>
+      <view class="map-wrap">
+        <geo-map id="map" class="fill" view="{{view}}" marks="{{marks}}" pickable="{{!feedback}}" bind:pick="onPick" bind:ready="onReady_" />
+        <view class="map-tools">
+          <view class="round" hover-class="btn-hover" bindtap="zoomIn">＋</view>
+          <view class="round" hover-class="btn-hover" bindtap="zoomOut">－</view>
+          <view class="round" hover-class="btn-hover" bindtap="recenter">◎</view>
+        </view>
+        <view class="map-note">示意地图</view>
+      </view>
+    </block>
+
+    <!-- 国旗题 -->
+    <block wx:else>
+      <view class="flag-wrap"><image class="bigflag" src="{{flag}}" mode="aspectFit" bindload="onReady_" /></view>
+      <view class="ask-line">这面国旗属于哪个国家？</view>
+      <view class="stack">
+        <view wx:for="{{options}}" wx:key="id" data-id="{{item.id}}" bindtap="onOption"
+              class="option big {{item.state}}" hover-class="{{feedback ? '' : 'tile-hover'}}">
+          <text>{{item.label}}</text>
+          <text wx:if="{{item.state === 'good'}}" class="mark ok">✓</text>
+          <text wx:if="{{item.state === 'bad'}}" class="mark no">✕</text>
+        </view>
+      </view>
+    </block>
+
+    <view wx:if="{{hintText && !feedback}}" class="note">提示：{{hintText}}</view>
+
+    <!-- 提交后的学习反馈 -->
+    <view wx:if="{{feedback}}" class="panel tight">
+      <view class="row wrap">
+        <text class="badge {{feedback.right ? 'green' : (feedback.state === 'skip' ? 'dim' : 'red')}}">{{feedback.right ? '✓' : (feedback.state === 'skip' ? '»' : '✕')}} {{feedback.title}}</text>
+        <text wx:if="{{feedback.chosenName && !feedback.right}}" class="badge red">你选的：{{feedback.chosenName}}</text>
+        <text wx:if="{{!feedback.right}}" class="badge green">正确：{{feedback.correctName}}</text>
+      </view>
+      <view class="clue">{{feedback.clue}}</view>
+    </view>
+  </view>
+
+  <!-- 底部：答题时是道具，提交后是“下一题” -->
+  <view class="foot">
+    <block wx:if="{{!feedback}}">
+      <view class="btn white {{hints ? '' : 'off'}}" hover-class="btn-hover" bindtap="onHint">💡 提示 ({{hints}})</view>
+      <view wx:if="{{type === 'flag'}}" class="btn white {{skips ? '' : 'off'}}" hover-class="btn-hover" bindtap="onSkip">» 跳过 ({{skips}})</view>
+    </block>
+    <view wx:else class="btn" hover-class="btn-hover" bindtap="onNext">{{feedback.nextText}} ›</view>
+  </view>
+</view>

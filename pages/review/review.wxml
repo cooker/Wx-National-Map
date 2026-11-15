@@ -1,0 +1,41 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view wx:if="{{r}}" class="body">
+    <view class="whitehead">
+      <view class="en">CHALLENGE REVIEW</view>
+      <view class="h1">复盘这次挑战</view>
+      <view class="lead">逐题看答案，也看你判断的依据。</view>
+    </view>
+
+    <view class="panel tight">
+      <view class="stats">
+        <view class="stat"><view class="b">{{r.score}}/100</view><view class="s">本次得分</view></view>
+        <view class="stat"><view class="b">{{r.correct}} 对 {{r.wrong}} 错</view><view class="s">答题结果</view></view>
+        <view class="stat"><view class="b">{{time}}</view><view class="s">总用时</view></view>
+      </view>
+    </view>
+
+    <view class="tabs">
+      <view class="tab {{onlyWrong ? '' : 'on'}}" data-w="0" bindtap="tab">全部 10</view>
+      <view class="tab {{onlyWrong ? 'on' : ''}}" data-w="1" bindtap="tab">只看错题 {{wrongCount}}</view>
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">题目记录</view><view class="small">点一题看解析</view></view>
+      <view class="qrow" hover-class="tile-hover" wx:for="{{rows}}" wx:key="i" data-i="{{item.i}}" bindtap="one">
+        <text class="no">{{item.no}}</text>
+        <image wx:if="{{item.flag}}" class="flag" src="{{item.flag}}" mode="aspectFit" />
+        <view wx:else class="flag-none">{{item.kind}}</view>
+        <view class="name"><view>{{item.name}}</view><view class="kind">{{item.kind}}</view></view>
+        <text class="result {{item.cls}}">{{item.mark}} {{item.fixed ? '已订正' : item.text}}</text>
+        <text class="chev">›</text>
+      </view>
+      <view wx:if="{{!rows.length}}" class="minor">这一局没有答错的题。</view>
+    </view>
+  </view>
+
+  <view class="foot">
+    <view wx:if="{{todo >= 0}}" class="btn" hover-class="btn-hover" bindtap="fix">去订正错题 ›</view>
+    <view wx:else class="btn white" hover-class="btn-hover" bindtap="back">返回</view>
+  </view>
+</view>

@@ -1,0 +1,11 @@
+.search { height: 84rpx; padding: 0 30rpx; font-size: 28rpx; background: #ffffff; border: 2rpx solid #d4dfea; border-radius: 42rpx; }
+.chips { white-space: nowrap; height: 76rpx; }
+.chip { display: inline-block; margin-right: 12rpx; padding: 10rpx 30rpx; font-size: 26rpx; font-weight: 700; color: #ffffff; background: #0a488e70; border-radius: 36rpx; }
+.chip.on { color: #654213; background: linear-gradient(#fff7d5, #ffdf8e); }
+.atlaslist { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.atlascard { width: 48.5%; margin-bottom: 18rpx; padding: 14rpx; background: #fff9ec; border: 2rpx solid #ddcba9; border-radius: 26rpx; }
+.atlasflag { display: flex; align-items: center; justify-content: center; height: 136rpx; background: linear-gradient(#f6f9f8, #eee7d8); border-radius: 20rpx; }
+.atlasflag-img { width: 160rpx; height: 100rpx; }
+.atlasflag-none { font-size: 22rpx; color: #8a7d68; }
+.atlas-name { margin-top: 10rpx; font-size: 28rpx; font-weight: 800; }
+.atlas-sub { font-size: 20rpx; color: #6b604e; }

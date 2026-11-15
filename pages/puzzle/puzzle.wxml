@@ -1,0 +1,57 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <view class="ribbon"><text class="b">{{name}} · {{diff}}</text><text>{{continent}}　|　已拼 {{lockedCount}}/{{n}}</text></view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">{{phase === 'place' ? '完成' + name + '的轮廓' : name + '拼成了'}}</view><view class="small">朝北 ↑</view></view>
+      <view class="board pz">
+        <view class="corner">{{iso}} / 0{{n}}</view>
+        <text class="north">N\n▲</text>
+        <view id="board" class="pz-area">
+          <image class="pz-base" src="{{base}}" />
+          <image wx:for="{{placed}}" wx:key="k" class="pz-piece" src="{{item.src}}" style="{{item.style}}" />
+          <block wx:if="{{tapMode && phase === 'place'}}">
+            <view wx:for="{{slots}}" wx:key="k" class="pz-slot" style="{{item.style}}" data-k="{{item.k}}" bindtap="pickSlot"><text>{{item.pos}}</text></view>
+          </block>
+        </view>
+      </view>
+      <view class="space"></view>
+      <view class="progress"><view class="i" style="width: {{pct}}%"></view></view>
+      <view class="caption">{{n === 4 ? '虚线表示拼缝，不是行政区边界。' : '拼缝只是游戏的辅助线，不是行政区边界。'}}</view>
+    </view>
+
+    <!-- 碎片托盘 -->
+    <view wx:if="{{phase === 'place'}}" class="panel">
+      <view class="sect"><view class="h2">碎片托盘</view><view class="small">剩余 {{tray.length}} 片</view></view>
+      <view class="pieces">
+        <view wx:for="{{tray}}" wx:key="k" class="piece {{picked === item.k ? 'on' : ''}} {{float && float.k === item.k ? 'ghost' : ''}}"
+              data-k="{{item.k}}" bindtap="pickPiece" catchtouchstart="dragStart" catchtouchmove="dragMove" catchtouchend="dragEnd" catchtouchcancel="dragEnd">
+          <image class="piece-img" src="{{item.src}}" mode="aspectFit" />
+          <view class="piece-name">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{phase === 'place'}}" class="note">{{hintText ? '提示：' + hintText : (tapMode ? '先点一片碎片，再点棋盘上你认为它该在的位置。' : '把碎片拖到对应空位，松手后会自动吸附。放错可以再试。')}}</view>
+
+    <!-- 地理追问：答对才算通关，答错可以再选，不用重拼 -->
+    <view wx:if="{{phase === 'ask'}}" class="panel">
+      <view class="sect"><view class="h2">地理追问</view><view class="small">答对才算通关</view></view>
+      <view class="question">{{ask.q}}</view>
+      <view class="space"></view>
+      <view class="stack">
+        <view wx:for="{{ask.options}}" wx:key="text" data-text="{{item.text}}" bindtap="answer" class="option {{item.state}}" hover-class="tile-hover">
+          <text>{{item.text}}</text><text wx:if="{{item.state === 'bad'}}" class="mark no">✕</text>
+        </view>
+      </view>
+      <view wx:if="{{retry}}" class="caption no">{{retry}}，再选一次。</view>
+    </view>
+  </view>
+
+  <view wx:if="{{phase === 'place'}}" class="foot">
+    <view class="btn white" hover-class="btn-hover" bindtap="onHint">💡 提示 ({{hintLeft}})</view>
+    <view class="btn white" hover-class="btn-hover" bindtap="toggleMode">{{tapMode ? '改回拖动' : '点选放置'}}</view>
+  </view>
+
+  <image wx:if="{{float}}" class="float" src="{{float.src}}" style="{{float.style}}" />
+</view>

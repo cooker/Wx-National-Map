@@ -1,0 +1,68 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <view class="whitehead">
+      <view class="en">PERSONAL RECORDS</view>
+      <view class="h1">我的挑战足迹</view>
+      <view class="lead">记录自己的进步，也看看做过哪些同题挑战。</view>
+    </view>
+    <view class="tabs">
+      <view class="tab {{tab === 0 ? 'on' : ''}}" data-t="0" bindtap="tab">我的记录</view>
+      <view class="tab {{tab === 1 ? 'on' : ''}}" data-t="1" bindtap="tab">我的同题挑战</view>
+    </view>
+
+    <block wx:if="{{tab === 0}}">
+      <view class="hero best">
+        <view class="en">PERSONAL BEST</view>
+        <view class="h1">{{best ? best.score + ' 分' : '还没有成绩'}}</view>
+        <view class="lead">{{best ? best.text : '完成一局十题挑战，这里就会出现你的最高分。'}}</view>
+        <view class="heroicon">🏆</view>
+      </view>
+
+      <view class="panel">
+        <view class="sect"><view class="h2">最近容易错的</view><view class="small">{{weakNote}}</view></view>
+        <view class="qrow" hover-class="tile-hover" wx:for="{{weak}}" wx:key="key" data-id="{{item.cid}}" bindtap="country">
+          <image wx:if="{{item.flag}}" class="flag" src="{{item.flag}}" mode="aspectFit" />
+          <view wx:else class="flag-none">{{item.kind}}</view>
+          <view class="name"><view>{{item.name}}</view><view class="kind">{{item.kind}}题 · {{item.text}}{{item.fixed ? ' · 已订正' : ''}}</view></view>
+          <text class="chev">›</text>
+        </view>
+        <view wx:if="{{weak.length}}" class="caption">点一个国家看图鉴。之后在十题挑战里答对它，就不再列在这里。</view>
+        <view wx:else class="minor">{{weakEmpty}}</view>
+      </view>
+
+      <view class="panel">
+        <view class="sect"><view class="h2">最近的十题挑战</view><view class="small">点一条看回顾</view></view>
+        <view class="qrow" hover-class="tile-hover" wx:for="{{records}}" wx:key="id" data-id="{{item.id}}" bindtap="review">
+          <text class="no">{{index + 1 < 10 ? '0' : ''}}{{index + 1}}</text>
+          <view class="name"><view>{{item.name}}</view><view class="kind">{{item.sub}}</view></view>
+          <text class="result">{{item.score}} 分</text>
+          <text class="chev">›</text>
+        </view>
+        <view wx:if="{{!records.length}}" class="minor">还没有十题挑战的记录。</view>
+      </view>
+
+      <view class="panel">
+        <view class="sect"><view class="h2">国家拼图</view><view class="small">不按时间排名</view></view>
+        <view class="qrow" hover-class="tile-hover" wx:for="{{puzzles}}" wx:key="id" data-id="{{item.id}}" bindtap="receipt">
+          <text class="no">🧩</text>
+          <view class="name"><view>{{item.name}}</view><view class="kind">{{item.sub}}</view></view>
+          <text class="chev">›</text>
+        </view>
+        <view wx:if="{{!puzzles.length}}" class="minor">还没有拼成过国家。</view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="note">这里是你用挑战码参加过的同题挑战和第一次的成绩。成绩只存在这台手机上，想和同学比，可以互相看一下结算页。</view>
+      <view class="panel">
+        <view class="sect"><view class="h2">我参加过的同题挑战</view></view>
+        <view class="qrow" wx:for="{{invites}}" wx:key="code">
+          <view class="name"><view class="mono">{{item.code}}</view><view class="kind">{{item.text}}{{item.live ? '' : ' · 挑战码已失效'}}</view></view>
+        </view>
+        <view wx:if="{{!invites.length}}" class="minor">还没有参加过同题挑战。在“地理挑战”里输入同学给的挑战码就能开始。</view>
+      </view>
+    </block>
+  </view>
+  <view class="foot"><view class="btn white" hover-class="btn-hover" bindtap="home">返回探索首页</view></view>
+</view>

@@ -1,0 +1,68 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view wx:if="{{r}}" class="body">
+    <view class="top">
+      <image class="top-img" src="/images/explorer.png" mode="aspectFit" />
+      <view class="star-row"><text wx:for="{{stars}}" wx:key="index" class="star {{item ? '' : 'off'}}">★</text></view>
+      <view class="banner {{r.completed ? '' : 'calm'}}">{{r.completed ? '挑战完成！' : '本次挑战结束'}}</view>
+    </view>
+
+    <view class="panel">
+      <view class="score-head">
+        <text>本次得分</text>
+        <text wx:if="{{r.newRecord}}" class="newrec">新纪录！</text>
+      </view>
+      <view class="score"><text class="score-big">{{r.score}}</text><text class="score-total"> / 100</text></view>
+      <view wx:if="{{r.replay}}" class="caption" style="text-align: center">练习重玩，不覆盖第一次的同题成绩，也不重复发奖励。</view>
+      <view class="stats">
+        <view class="stat"><view class="b ok">✓ {{r.correct}}</view><view class="s">答对</view></view>
+        <view class="stat"><view class="b no">✕ {{r.wrong}}</view><view class="s">答错</view></view>
+        <view class="stat"><view class="b">{{time}}</view><view class="s">用时</view></view>
+      </view>
+      <view wx:if="{{extra}}" class="caption">{{extra}}</view>
+
+      <view class="space"></view>
+      <view class="sect"><view class="h3">题目回顾</view><view class="small" bindtap="all">查看全部 ›</view></view>
+      <view class="rows">
+        <view class="qrow" hover-class="tile-hover" wx:for="{{preview}}" wx:key="i" data-i="{{item.i}}" bindtap="one">
+          <text class="result {{item.cls}}">{{item.mark}}</text>
+          <image wx:if="{{item.flag}}" class="flag" src="{{item.flag}}" mode="aspectFit" />
+          <view wx:else class="flag-none">{{item.kind}}</view>
+          <text class="name">{{item.name}}</text>
+          <text class="chev">›</text>
+        </view>
+      </view>
+
+      <view class="space"></view>
+      <view class="h3">获得奖励</view>
+      <view wx:if="{{r.levelUp}}" class="note" style="margin-top: 14rpx">升级了！现在是 Lv.{{r.levelUp}}。</view>
+      <view class="rewards">
+        <view class="reward"><text class="coin">●</text><text class="reward-n">+{{r.xp}}</text><text class="reward-s">经验</text></view>
+        <view class="reward"><text class="coin gold">★</text><text class="reward-n">+{{r.points}}</text><text class="reward-s">积分</text></view>
+      </view>
+    </view>
+
+    <!-- 下一步：把学生引到订正和领奖，而不是只能再来一局 -->
+    <view wx:if="{{todoCount || claimable}}" class="panel">
+      <view class="sect"><view class="h2">下一步</view></view>
+      <view class="stack">
+        <view wx:if="{{todoCount}}" class="tile" hover-class="tile-hover" bindtap="fix">
+          <view class="chipicon">🔍</view>
+          <view><view class="strong">订正 {{todoCount}} 道错题</view><view class="sub">看解析，再答一道追问，不影响这一局的成绩</view></view>
+          <text class="chev">›</text>
+        </view>
+        <view wx:if="{{claimable}}" class="tile" hover-class="tile-hover" bindtap="tasks">
+          <view class="chipicon green">📋</view>
+          <view><view class="strong">有 {{claimable}} 个每日任务完成了</view><view class="sub">去任务页领取积分</view></view>
+          <text class="chev">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="foot">
+    <view class="btn white compact" hover-class="btn-hover" bindtap="home">🏠</view>
+    <view class="btn white" hover-class="btn-hover" bindtap="share">分享战绩</view>
+    <view class="btn" hover-class="btn-hover" bindtap="again">再来一局</view>
+  </view>
+</view>

@@ -1,0 +1,50 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <view class="whitehead">
+      <view class="en">SHARE PREVIEW</view>
+      <view class="h1">邀请卡预览</view>
+      <view class="lead">发出前，先看看同学会收到什么。</view>
+    </view>
+
+    <view wx:if="{{blocked}}" class="panel">
+      <view class="leadcopy">这一局是每日任务的专题练习，题目是按主题挑的，不能做成同题邀请。去打一局普通的十题挑战，再来邀请同学。</view>
+    </view>
+
+    <block wx:else>
+      <view class="invite">
+        <view class="marker">GEOQUEST · FRIENDS CHALLENGE</view>
+        <image class="invite-img" src="/images/explorer.png" mode="aspectFit" />
+        <view class="invite-title">{{title}}</view>
+        <view class="invite-sub">{{sub}}</view>
+        <view wx:if="{{withScore}}" class="invite-sub">我的成绩：{{scoreText}}</view>
+        <view class="code">
+          <view class="s">同题挑战码</view>
+          <view class="b">{{code}}</view>
+          <view class="s">有效期 {{days}} 天</view>
+        </view>
+      </view>
+
+      <view class="panel">
+        <view class="sect"><view class="h2">分享设置</view></view>
+        <view wx:if="{{kind === 'quiz'}}" class="between">
+          <view><view class="h3">附上总分和星级</view><view class="minor">默认关闭，分享卡不显示个人成绩。</view></view>
+          <switch checked="{{withScore}}" color="#2f86c5" bindchange="toggle" />
+        </view>
+        <view wx:else class="minor">只公开国家、难度和片数，不公开你拼的过程和追问答案。</view>
+        <view class="option" style="margin-top: 22rpx" hover-class="tile-hover" bindtap="copy"><text>复制挑战码</text><text class="chev">›</text></view>
+      </view>
+
+      <view class="note">同学打开小程序，在“地理挑战”里输入挑战码就能加入。分享不是领取奖励的条件。</view>
+    </block>
+  </view>
+
+  <view class="foot">
+    <block wx:if="{{!blocked}}">
+      <view class="btn white" hover-class="btn-hover" bindtap="save">保存图片</view>
+      <button class="btn sharebtn" open-type="share" hover-class="btn-hover">分享给同学 ↗</button>
+    </block>
+    <view wx:else class="btn white" hover-class="btn-hover" bindtap="back">返回</view>
+  </view>
+  <canvas type="2d" id="card" class="hidden-canvas"></canvas>
+</view>

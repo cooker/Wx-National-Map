@@ -1,0 +1,43 @@
+.home { padding-top: 0; padding-bottom: 60rpx; }
+.home .body { gap: 20rpx; }
+
+.me { display: flex; align-items: center; gap: 16rpx; align-self: flex-start; }
+.avatar { width: 92rpx; height: 92rpx; overflow: hidden; background: #bfe6ff; border: 5rpx solid #ffffff; border-radius: 50%; box-shadow: 0 4rpx 8rpx #0b4a8a66; }
+.avatar-img { width: 100%; height: 100%; }
+.me-name { display: inline-block; padding: 2rpx 22rpx; font-size: 26rpx; font-weight: 700; color: #ffffff; background: #0a4d9a99; border-radius: 30rpx; }
+.me-bar { display: flex; align-items: center; margin-top: 6rpx; font-size: 22rpx; font-weight: 800; background: #0a4d9a99; border-radius: 30rpx; overflow: hidden; }
+.lv { padding: 2rpx 16rpx; color: #5a3608; background: linear-gradient(#ffe36a, #f7b02c); border-radius: 30rpx; }
+.xp { padding: 2rpx 20rpx 2rpx 12rpx; color: #ffffff; }
+
+/* 标志：黄橙立体字 + 红色绶带 */
+.logo { margin-top: 10rpx; text-align: center; }
+.logo-text { font-family: "Arial Rounded MT Bold", "Arial Black", Arial, sans-serif; font-size: 116rpx; font-weight: 900; line-height: 1.05; letter-spacing: -2rpx; color: #ffd234;
+  text-shadow: 0 -2rpx 0 #fff3a6, 0 6rpx 0 #f08c1a, 0 10rpx 0 #7a3b0c, 4rpx 10rpx 0 #7a3b0c, -4rpx 10rpx 0 #7a3b0c, 0 18rpx 12rpx #06315f88; }
+.logo-ribbon { display: inline-block; margin-top: 6rpx; padding: 6rpx 44rpx; font-size: 36rpx; font-weight: 900; letter-spacing: 4rpx; color: #ffffff; text-shadow: 0 3rpx 0 #8f1f1f; background: linear-gradient(#f0554c, #c9302c); border: 4rpx solid #ffd9a6; border-radius: 12rpx; box-shadow: 0 6rpx 0 #7d1a1a, 0 10rpx 14rpx #06315f66; transform: rotate(-3deg); }
+.explorer { display: block; width: 100%; height: 400rpx; margin: -6rpx 0 -14rpx; }
+
+/* 三个玩法的大按钮 */
+.mode { display: flex; align-items: center; gap: 24rpx; min-height: 148rpx; padding: 18rpx 32rpx; color: #ffffff; border: 6rpx solid #ffffffcc; border-radius: 52rpx; box-shadow: inset 0 6rpx 4rpx #ffffff66, inset 0 -10rpx 0 #00000022, 0 8rpx 0 #0b4a8a88, 0 14rpx 20rpx #06315f55; }
+.mode.green { background: linear-gradient(#6fe08f, #2fb96c); }
+.mode.orange { background: linear-gradient(#ffc24d, #f39a1f); }
+.mode.purple { background: linear-gradient(#b58bff, #8456e0); }
+.mode-icon { flex: none; font-size: 84rpx; line-height: 1; }
+.mode-text { flex: 1; }
+.mode-name { font-size: 50rpx; font-weight: 900; line-height: 1.2; text-shadow: 0 4rpx 0 #00000033; }
+.mode-sub { margin-top: 4rpx; font-size: 24rpx; font-weight: 700; opacity: 0.95; }
+.mode-arrow { flex: none; font-family: Arial, sans-serif; font-size: 64rpx; font-weight: 900; line-height: 1; }
+
+.entries { display: flex; gap: 18rpx; margin-top: 8rpx; }
+.entry { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6rpx; padding: 18rpx 0 14rpx; font-size: 26rpx; font-weight: 800; color: #3a2a12; background: linear-gradient(#fffaf0, #ffe9c4); border: 4rpx solid #ffffff; border-radius: 30rpx; box-shadow: 0 6rpx 0 #b77b3377, 0 10rpx 16rpx #06315f44; }
+.entry-icon { font-size: 60rpx; line-height: 1.1; }
+.dot { position: absolute; right: 14rpx; top: 10rpx; width: 24rpx; height: 24rpx; background: #f0443a; border: 4rpx solid #ffffff; border-radius: 50%; }
+
+.pts { padding: 2rpx 18rpx 2rpx 14rpx; color: #ffe27a; border-left: 2rpx solid #ffffff55; }
+.pending { display: flex; align-items: center; gap: 20rpx; padding: 18rpx 26rpx; background: linear-gradient(#fffaf0, #ffe9c4); border: 4rpx solid #ffffff; border-radius: 30rpx; box-shadow: 0 6rpx 0 #b77b3377, 0 10rpx 16rpx #06315f44; }
+.pending-icon { flex: none; width: 64rpx; height: 64rpx; line-height: 64rpx; text-align: center; font-size: 30rpx; color: #ffffff; background: #2fb96c; border-radius: 50%; }
+.pending-title { font-size: 32rpx; font-weight: 900; color: #3a2a12; }
+.pending-sub { font-size: 24rpx; color: #6b5537; }
+.firstrun { padding: 12rpx 24rpx; text-align: center; font-size: 26rpx; font-weight: 700; color: #ffffff; background: #0a4d9a99; border-radius: 24rpx; }
+.entry-count { font-size: 20rpx; font-weight: 700; color: #7a582c; }
+/* 连续学习天数：一条小标签，不占整行 */
+.streak { align-self: center; padding: 8rpx 28rpx; font-size: 24rpx; font-weight: 800; color: #5a3608; background: linear-gradient(#fffaf0, #ffe9c4); border: 4rpx solid #ffffff; border-radius: 30rpx; box-shadow: 0 4rpx 0 #b77b3377; }

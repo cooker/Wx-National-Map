@@ -1,0 +1,32 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <view class="hero">
+      <view class="en">ACHIEVEMENT ALBUM</view>
+      <view class="h1">我的探险徽章</view>
+      <view class="lead">每枚徽章，记录一次看得见的进步。</view>
+      <view class="heroicon">🏆</view>
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">徽章收藏册</view><view class="small">已获得 {{got}} / {{list.length}}</view></view>
+      <view class="medals">
+        <view wx:for="{{list}}" wx:key="id" class="medal {{item.got ? '' : 'lock'}}" data-i="{{index}}" bindtap="detail">
+          <view class="medal-icon">{{item.icon}}</view>
+          <view class="medal-name">{{item.name}}</view>
+          <view class="medal-sub">{{item.got ? '已获得' : item.n + ' / ' + item.need}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{next}}" class="panel">
+      <view class="sect"><view class="h2">下一枚：{{next.name}}</view><text class="badge gold">进行中</text></view>
+      <view class="leadcopy">{{next.text}}当前进度 {{next.n}} / {{next.need}}。</view>
+      <view class="space"></view>
+      <view class="progress"><view class="i" style="width: {{next.pct}}%"></view></view>
+      <view wx:if="{{next.go}}" class="option" style="margin-top: 24rpx" hover-class="tile-hover" bindtap="go"><text>{{next.goText}}</text><text class="chev">›</text></view>
+    </view>
+    <view wx:else class="note">所有徽章都拿到了。</view>
+  </view>
+  <view class="foot"><view class="btn white" hover-class="btn-hover" bindtap="tasks">查看每日任务</view></view>
+</view>

@@ -1,0 +1,9 @@
+.invite { position: relative; padding: 32rpx 28rpx; overflow: hidden; text-align: center; color: #ffffff; background: linear-gradient(#1c82d8, #49aeea); border: 8rpx solid #fff5d0; border-radius: 44rpx; box-shadow: 0 10rpx 0 #105c99, 0 18rpx 32rpx #074d8e33; }
+.marker { font-family: Arial, sans-serif; font-size: 22rpx; font-weight: 800; letter-spacing: 4rpx; color: #ddf6ff; }
+.invite-img { display: block; width: 284rpx; height: 252rpx; margin: 10rpx auto; }
+.invite-title { font-size: 54rpx; font-weight: 900; text-shadow: 0 4rpx 0 #134d7d, 0 6rpx 10rpx #134d7d; }
+.invite-sub { margin-top: 6rpx; font-size: 24rpx; text-shadow: 0 2rpx 4rpx #174d83; }
+.invite .code { margin: 18rpx auto 0; width: 70%; background: #fff4db; }
+.sharebtn { flex: 1; width: auto !important; min-height: 98rpx; margin: 0; padding: 18rpx 26rpx !important; font-size: 36rpx; font-weight: 900; line-height: 1.15; }
+.sharebtn::after { border: 0; }
+.hidden-canvas { position: fixed; left: -3000px; top: 0; width: 300px; height: 400px; }

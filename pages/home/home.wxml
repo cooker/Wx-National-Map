@@ -1,0 +1,68 @@
+<view class="page home">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <!-- 玩家：头像、称号、等级和经验 -->
+    <view class="me" style="margin-top: {{top}}px" bindtap="showLevel">
+      <view class="avatar"><image class="avatar-img" src="/images/explorer.png" mode="aspectFill" /></view>
+      <view class="me-info">
+        <view class="me-name">{{name}}</view>
+        <view class="me-bar"><text class="lv">Lv.{{lv}}</text><text class="xp">{{cur}} / {{need}}</text><text class="pts">★ {{points}}</text></view>
+      </view>
+    </view>
+
+    <view class="logo">
+      <view class="logo-text">GeoQuest</view>
+      <view class="logo-ribbon">世界地理知识游戏</view>
+    </view>
+    <image class="explorer" src="/images/explorer.png" mode="aspectFit" />
+
+    <!-- 有没打完的对局：点一下接着玩 -->
+    <view wx:if="{{pending}}" class="pending" hover-class="tile-hover" bindtap="goPending">
+      <text class="pending-icon">▶</text>
+      <view style="flex: 1"><view class="pending-title">{{pending.title}}</view><view class="pending-sub">{{pending.sub}}</view></view>
+      <text class="chev">›</text>
+    </view>
+    <view wx:if="{{streak}}" class="streak" hover-class="tile-hover" data-url="/pages/tasks/tasks" bindtap="go"><text>🔥 {{streak.text}}</text></view>
+    <view wx:if="{{firstRun}}" class="firstrun">第一次来？先玩“地图找国家”，10 道题大约 3 分钟。</view>
+
+    <!-- 三个玩法 -->
+    <view class="mode green" hover-class="btn-hover" data-mode="map" bindtap="start">
+      <text class="mode-icon">🗺️</text>
+      <view class="mode-text"><view class="mode-name">地图找国家</view><view class="mode-sub">在世界地图上找到指定国家</view></view>
+      <text class="mode-arrow">›</text>
+    </view>
+    <view class="mode orange" hover-class="btn-hover" data-mode="flag" bindtap="start">
+      <text class="mode-icon">🚩</text>
+      <view class="mode-text"><view class="mode-name">国旗竞猜</view><view class="mode-sub">根据国旗猜出国家名称</view></view>
+      <text class="mode-arrow">›</text>
+    </view>
+    <view class="mode purple" hover-class="btn-hover" bindtap="hub">
+      <text class="mode-icon">🏆</text>
+      <view class="mode-text"><view class="mode-name">地理挑战</view><view class="mode-sub">混合题型 · 限时闯关 · 国家拼图</view></view>
+      <text class="mode-arrow">›</text>
+    </view>
+
+    <!-- 四个学习入口 -->
+    <view class="entries">
+      <view class="entry" hover-class="tile-hover" data-url="/pages/tasks/tasks" bindtap="go"><text class="entry-icon">📋</text><text>每日任务</text><text class="entry-count">{{taskText}}</text><view wx:if="{{taskDot}}" class="dot"></view></view>
+      <view class="entry" hover-class="tile-hover" data-url="/pages/badges/badges" bindtap="go">
+        <text class="entry-icon">🏆</text><text>成就</text><view wx:if="{{newBadge}}" class="dot"></view>
+      </view>
+      <view class="entry" hover-class="tile-hover" data-url="/pages/rank/rank" bindtap="go"><text class="entry-icon">🥇</text><text>排行榜</text></view>
+      <view class="entry" hover-class="tile-hover" data-url="/pages/atlas/atlas" bindtap="go"><text class="entry-icon">📘</text><text>图鉴</text></view>
+    </view>
+  </view>
+
+  <!-- 有没结束的对局时，先让学生选 -->
+  <view wx:if="{{resume}}" class="mask" bindtap="resumeClose">
+    <view class="panel dialog" catchtap="noop">
+      <view class="sect"><view class="h2">{{resume.title}}</view></view>
+      <view class="leadcopy">{{resume.text}}</view>
+      <view class="space"></view>
+      <view class="row">
+        <view class="btn white" style="flex: 1" hover-class="btn-hover" bindtap="resumeNo">放弃并新开</view>
+        <view class="btn" style="flex: 1" hover-class="btn-hover" bindtap="resumeYes">继续</view>
+      </view>
+    </view>
+  </view>
+</view>

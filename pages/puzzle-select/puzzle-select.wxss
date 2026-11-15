@@ -1,0 +1,6 @@
+.cgrid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.ccard { width: 31.5%; margin-bottom: 16rpx; padding: 18rpx 8rpx; text-align: center; background: #fffaf0; border: 4rpx solid #dac49f; border-radius: 30rpx; }
+.ccard.on { background: #e3f3d5; border-color: #57a849; }
+.sil { width: 152rpx; height: 152rpx; }
+.cname { font-size: 30rpx; font-weight: 800; }
+.csub { font-size: 20rpx; color: #625a50; }

@@ -1,0 +1,20 @@
+.top { position: relative; height: 380rpx; text-align: center; }
+.top-img { width: 300rpx; height: 250rpx; }
+.star-row { position: absolute; left: 0; right: 0; top: 176rpx; }
+.star { margin: 0 6rpx; font-size: 110rpx; line-height: 1; color: #ffd234; text-shadow: 0 6rpx 0 #c97a10, 0 0 8rpx #ffffff; }
+.star.off { color: #cfe1f2; text-shadow: 0 6rpx 0 #7fa3c7; }
+.banner { position: absolute; left: 30rpx; right: 30rpx; bottom: 0; padding: 10rpx 0 14rpx; font-size: 68rpx; font-weight: 900; letter-spacing: 6rpx; color: #ffffff; text-shadow: 0 5rpx 0 #8f1f1f; background: linear-gradient(#f0554c, #c9302c); border: 5rpx solid #ffd9a6; border-radius: 20rpx; box-shadow: 0 8rpx 0 #7d1a1a, 0 14rpx 20rpx #06315f66; }
+.banner.calm { font-size: 54rpx; text-shadow: 0 5rpx 0 #1a4c8f; background: linear-gradient(#4f9bef, #2a6fcf); border-color: #d6e9ff; box-shadow: 0 8rpx 0 #174a94; }
+
+.score-head { position: relative; text-align: center; font-size: 34rpx; font-weight: 800; }
+.newrec { position: absolute; right: -10rpx; top: -6rpx; padding: 4rpx 18rpx; font-size: 24rpx; color: #ffffff; background: #e8453a; border-radius: 10rpx; transform: rotate(10deg); }
+.score { margin: 4rpx 0 18rpx; text-align: center; }
+.score-big { font-family: Arial, sans-serif; font-size: 130rpx; font-weight: 900; line-height: 1.1; color: #d43a22; }
+.score-total { font-family: Arial, sans-serif; font-size: 72rpx; font-weight: 900; color: #b7742c; }
+.rows { padding: 0 20rpx; background: #fff9ec; border: 2rpx solid #e6ca9f; border-radius: 26rpx; }
+.rewards { display: flex; gap: 18rpx; margin-top: 16rpx; }
+.reward { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12rpx; padding: 18rpx 0; background: #fff3d6; border: 2rpx solid #e6ca9f; border-radius: 22rpx; }
+.coin { font-size: 48rpx; line-height: 1; color: #f2a52f; }
+.coin.gold { color: #ffc62e; text-shadow: 0 3rpx 0 #c97a10; }
+.reward-n { font-family: Arial, sans-serif; font-size: 44rpx; font-weight: 900; color: #3a2a12; }
+.reward-s { font-size: 24rpx; color: #675949; }

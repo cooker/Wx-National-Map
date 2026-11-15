@@ -1,0 +1,36 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <view class="whitehead">
+      <view class="en">WORLD ATLAS</view>
+      <view class="h1">翻开世界图鉴</view>
+      <view class="lead">把国名、位置和旗帜放在一起记。已学习 {{learned}} / {{total}}。</view>
+    </view>
+    <input class="search" placeholder="搜索国家名称" value="{{keyword}}" bindinput="onInput" />
+    <scroll-view class="chips" scroll-x>
+      <view wx:for="{{chips}}" wx:key="*this" data-name="{{item}}" bindtap="chip" class="chip {{item === continent ? 'on' : ''}}">{{item}}</view>
+    </scroll-view>
+
+    <view class="panel" wx:for="{{groups}}" wx:key="name" wx:for-item="g">
+      <view class="sect"><view class="h2">{{g.name}}</view><view class="small">国家卡片</view></view>
+      <view class="atlaslist">
+        <view class="atlascard" hover-class="tile-hover" wx:for="{{g.items}}" wx:key="id" data-id="{{item.id}}" bindtap="open">
+          <view class="atlasflag">
+            <image wx:if="{{item.flag}}" class="atlasflag-img" src="{{item.flag}}" mode="aspectFit" />
+            <text wx:else class="atlasflag-none">国旗素材待补</text>
+          </view>
+          <view class="atlas-name">{{item.name}}</view>
+          <view class="atlas-sub {{item.learned ? 'ok' : ''}}">{{item.learned ? '✓ 已学习' : '尚未学习'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{!groups.length}}" class="panel">
+      <view class="leadcopy">没有找到符合条件的国家。</view>
+      <view class="space"></view>
+      <view class="btn white smallbtn" hover-class="btn-hover" bindtap="clear">清除筛选</view>
+    </view>
+    <view class="note">打开国家卡片可以看位置、国旗和辨识线索。</view>
+  </view>
+  <view class="foot"><view class="btn white" hover-class="btn-hover" bindtap="home">返回探索首页</view></view>
+</view>

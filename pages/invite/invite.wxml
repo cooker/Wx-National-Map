@@ -1,0 +1,39 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view class="body">
+    <view class="hero skyblue">
+      <view class="en">CHALLENGE INVITATION</view>
+      <view class="h1">{{ok ? '同学邀你挑战' : '这次邀请用不了'}}</view>
+      <view class="lead">{{ok ? '从头独立开始，成绩只记在你自己的手机上。' : '可以换一个挑战码，或者先做普通练习。'}}</view>
+      <image class="guide" src="/images/explorer.png" mode="aspectFit" />
+    </view>
+
+    <block wx:if="{{ok}}">
+      <view class="panel">
+        <view class="sect"><view class="h2">{{title}}</view><text class="badge green">有效邀请</text></view>
+        <view class="stats">
+          <view class="stat" wx:for="{{stats}}" wx:key="s"><view class="b">{{item.b}}</view><view class="s">{{item.s}}</view></view>
+        </view>
+        <view class="leadcopy" style="margin-top: 20rpx">{{text}}</view>
+        <view wx:if="{{played}}" class="caption">你已经用这个码挑战过一次。再玩记为“练习重玩”，不覆盖第一次的成绩，也不重复发奖励。</view>
+      </view>
+
+      <view class="code"><view class="s">同题挑战码</view><view class="b">{{code}}</view><view class="s">还有 {{daysLeft}} 天有效</view></view>
+    </block>
+
+    <view wx:if="{{bad}}" class="panel">
+      <view class="sect"><view class="h2">{{bad.title}}</view><text class="badge red">不能同题</text></view>
+      <view class="leadcopy">{{bad.text}}</view>
+      <view wx:if="{{code}}" class="caption">你输入的是：{{code}}</view>
+      <view class="note" style="margin-top: 22rpx">转去普通练习后，题目会重新抽取，不再算同题挑战。</view>
+    </view>
+  </view>
+
+  <view class="foot">
+    <view wx:if="{{ok}}" class="btn" hover-class="btn-hover" bindtap="start">{{kind === 'puzzle' ? '开始同拼' : '开始同题挑战'}} ›</view>
+    <block wx:else>
+      <view class="btn white" hover-class="btn-hover" bindtap="home">回首页</view>
+      <view class="btn" hover-class="btn-hover" bindtap="practice">去普通练习</view>
+    </block>
+  </view>
+</view>

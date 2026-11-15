@@ -1,0 +1,2 @@
+<canvas type="2d" id="map" class="map"
+        catchtouchstart="onStart" catchtouchmove="onMove" catchtouchend="onEnd" catchtouchcancel="onEnd"></canvas>

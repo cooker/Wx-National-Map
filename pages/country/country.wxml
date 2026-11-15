@@ -1,0 +1,36 @@
+<view class="page">
+  <image class="bg" src="/images/lake.jpg" mode="widthFix" />
+  <view wx:if="{{c}}" class="body">
+    <view class="hero skyblue">
+      <view class="en">COUNTRY PROFILE / {{c.id}}</view>
+      <view class="h1">{{c.name}}</view>
+      <view class="lead">{{c.en}} · {{c.continent}}</view>
+      <text class="badge {{learned ? 'green' : 'dim'}}" style="margin-top: 14rpx">{{learned ? '✓ 已学习' : '尚未学习'}}</text>
+      <image wx:if="{{c.flag}}" class="hero-flag" src="{{c.flag}}" mode="aspectFit" />
+    </view>
+
+    <view class="panel">
+      <view class="sect"><view class="h2">它在什么位置？</view><view class="small">示意地图</view></view>
+      <view wx:if="{{mapView}}" class="board mapbox">
+        <text class="north">N\n▲</text>
+        <geo-map class="fill" view="{{mapView}}" marks="{{marks}}" pickable="{{false}}" />
+      </view>
+      <view class="leadcopy" style="margin-top: 18rpx">{{c.explain}}</view>
+    </view>
+
+    <view wx:if="{{c.flag}}" class="panel">
+      <view class="sect"><view class="h2">怎样认出它的国旗？</view></view>
+      <view class="row"><image class="flag-mid" src="{{c.flag}}" mode="aspectFit" /><view class="leadcopy" style="flex: 1">{{c.flagExplain}}</view></view>
+    </view>
+
+    <view wx:if="{{hasPuzzle}}" class="panel">
+      <view class="sect"><view class="h2">试试它的轮廓</view></view>
+      <view class="tile" hover-class="tile-hover" bindtap="puzzle">
+        <view class="chipicon green">🧩</view>
+        <view><view class="strong">{{c.name}} · 国家拼图</view><view class="sub">从 4 片入门开始</view></view>
+        <text class="chev">›</text>
+      </view>
+    </view>
+  </view>
+  <view class="foot"><view class="btn white" hover-class="btn-hover" bindtap="back">返回上一页</view></view>
+</view>

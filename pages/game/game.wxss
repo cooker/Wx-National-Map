@@ -1,0 +1,25 @@
+.game { height: 100vh; min-height: 0; padding-bottom: 0; }
+.game-body { height: 100%; padding-bottom: calc(190rpx + env(safe-area-inset-bottom)); gap: 18rpx; }
+.pill { padding: 8rpx 28rpx; font-size: 28rpx; font-weight: 800; color: #17365f; background: #dcefffee; border: 2rpx solid #ffffff; border-radius: 40rpx; }
+.clock.low { color: #ae2f22; background: #ffe3da; }
+.hearts { margin-top: -8rpx; text-align: right; }
+.heart { margin-left: 8rpx; font-size: 52rpx; line-height: 1; color: #f0443a; text-shadow: 0 3rpx 0 #9d1f1a; }
+.heart.empty { color: #9cc4e8; text-shadow: none; }
+
+.ask-card { align-self: center; min-width: 72%; padding: 16rpx 40rpx 20rpx; text-align: center; background: linear-gradient(#fff6e0, #ffe9c4); border: 6rpx solid #fffaf0; border-radius: 36rpx; box-shadow: 0 6rpx 0 #b77b3377, 0 12rpx 20rpx #06315f44; }
+.ask-small { font-size: 30rpx; font-weight: 800; color: #142044; }
+.ask-name { font-size: 64rpx; font-weight: 900; line-height: 1.2; color: #142044; }
+
+.map-wrap { position: relative; flex: 1; min-height: 300rpx; overflow: hidden; border: 6rpx solid #ffffffaa; border-radius: 36rpx; box-shadow: 0 8rpx 16rpx #06315f44; }
+.map-tools { position: absolute; right: 18rpx; bottom: 18rpx; display: flex; flex-direction: column; gap: 14rpx; }
+.round { width: 84rpx; height: 84rpx; line-height: 78rpx; text-align: center; font-size: 44rpx; font-weight: 800; color: #1a66c2; background: #ffffff; border: 3rpx solid #d6e6f7; border-radius: 50%; box-shadow: 0 6rpx 0 #5893c5; }
+.map-note { position: absolute; left: 18rpx; bottom: 14rpx; padding: 2rpx 14rpx; font-size: 20rpx; color: #ffffff; background: #0a4d9a99; border-radius: 12rpx; }
+
+.flag-wrap { flex: 1; min-height: 200rpx; max-height: 420rpx; display: flex; align-items: center; justify-content: center; }
+.bigflag { width: 86%; height: 100%; filter: drop-shadow(0 8rpx 6rpx #06315f66); }
+.ask-line { padding: 18rpx 30rpx; text-align: center; font-size: 36rpx; font-weight: 900; color: #142044; background: linear-gradient(#ffffff, #eaf3ff); border: 4rpx solid #ffffff; border-radius: 40rpx; box-shadow: 0 6rpx 0 #9bb7d3; }
+.option.big { min-height: 96rpx; font-size: 36rpx; font-weight: 800; border-radius: 48rpx; }
+.option.big .mark { font-size: 40rpx; }
+
+.wrap { flex-wrap: wrap; gap: 12rpx; }
+.clue { margin-top: 14rpx; font-size: 28rpx; line-height: 1.6; color: #322d2a; }
